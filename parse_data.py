@@ -15,8 +15,8 @@ def parse_data(file_data: list) -> dict:
     try:
         for item in file_data:
             parts = item.split("=")
-            data_dict[parts[0].lower()] = parts[1]
-    except Exception as v:
+            data_dict[parts[0].lower().strip()] = parts[1]
+    except Exception:
         return f"error : you need to entre key = value"
     return data_dict
 
@@ -31,6 +31,18 @@ def check_prop(dict_data):
             except Exception:
                 return f"error : value is not correct"
         elif key == "entry" or key == "exit":
+            try:
+                dis = val.split(',')
+                if len(dis) != 2:
+                    raise ValueError("key = (+x,+y)")
+                if int(dis[0]) < 0 or int(dis[1]) < 0:
+                    raise ValueError("key = (+x,+y)")
+                l = [int(dis[0]), int(dis[1])]
+                t = tuple(l)
+                data_parssed[key] = t
+            except Exception:
+                return f"Error entre valid value : key = (+x,+y)"
+        elif key == "output_file":
             pass
     return data_parssed
 
