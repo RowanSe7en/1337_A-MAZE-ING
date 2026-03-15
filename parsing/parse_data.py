@@ -72,4 +72,17 @@ def check_all_available(data: dict):
     if data["entry"] == data["exit"]:
         print("Error: (entry == exit)")
         sys.exit(1)
+    if data['width'] < 5 or data['height'] < 7:
+        print('Error: maze very small')
+        sys.exit(1)
+    w, h = data["width"], data['height']
+    en_x, en_y = data["entry"]
+    ex_x, ex_y = data["exit"]
+    if not (0 <= en_x < w and 0 <= en_y < h):
+        print(f"Error: Entry {data['entry']} is outside the maze bounds.")
+        sys.exit(1)
+    elif not (0 <= ex_x < w and 0 <= ex_y < h):
+        print(f"Error: Exit {data['exit']} is outside the maze bounds.")
+        sys.exit(1)
+    print(data)
     return data
