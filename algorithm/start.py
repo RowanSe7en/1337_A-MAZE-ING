@@ -66,6 +66,8 @@ class MazeGenerator:
 
             else:
                 stack.pop()
+            
+        return self.maze
 
     def solve_maze(self, output_file): #bfs
 
@@ -88,7 +90,7 @@ class MazeGenerator:
 
             # print(queue)
             y, x = queue[0]
-            print(f"y {y}, x {x}")
+            # print(f"y {y}, x {x}")
             queue.pop(0)
             # print(queue)
 
@@ -137,21 +139,21 @@ height = 5
 seed = 10
 
 p = MazeGenerator(width, height, seed)
-p.generate_maze()
+maze = p.generate_maze()
 
 output_file = "output_maze.txt"
 path = p.solve_maze(output_file)
 vis = p.visited
 
 
-with open(output_file, 'r') as output_maze:
-    print(output_maze.read())
+# with open(output_file, 'r') as output_maze:
+#     print(output_maze.read())
 
-# for i in range(0, height):
-#     for j in range(0, width):
-#         print((maze[i][j]), end=" ")
-#     print()
-# print()
+for i in range(0, height):
+    for j in range(0, width):
+        print(f"{maze[i][j]:b}", end=" ")
+    print()
+print()
 # print()
 # for i in range(0, height):
 #     for j in range(0, width):
@@ -161,3 +163,39 @@ with open(output_file, 'r') as output_maze:
 
 
 
+def ascii_render():
+
+    for y in range(height):
+
+        for x in range(width):
+
+            if maze[y][x] & (1 << 0):
+                print("****", end="")
+            else:
+                print("    ", end="")
+
+        print()
+
+        for x in range(width):
+
+            if maze[y][x] & (1 << 3):
+                
+                if x == width - 1:
+                    print("|  |", end="")
+                else:
+                    print("|   ", end="")
+
+            elif x == width - 1:
+                print("   |", end="")
+
+            else:
+                print("    ", end="")
+        print()
+
+    for x in range(width):
+        print("****", end="")
+
+    print()
+        
+
+ascii_render()

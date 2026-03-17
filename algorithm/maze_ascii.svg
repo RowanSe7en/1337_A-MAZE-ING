@@ -1,0 +1,165 @@
+<svg width="100%" viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg">
+
+<defs/>
+
+<!--
+Grid is 5 cols x 5 rows
+Bits: N=1, E=2, S=4, W=8
+
+Row 0: 1101=13, 11=3,  1011=11, 1001=9,  11=3
+Row 1: 1011=11, 1010=10,1100=12,110=6,   1010=10
+Row 2: 1000=8,  110=6, 1001=9,  101=5,   10=2
+Row 3: 1010=10, 1101=13,10=2,   1001=9,  110=6
+Row 4: 1100=12, 101=5, 110=6,   1100=12, 111=7
+
+Cell(r,c) has: N wall if bit0, E wall if bit1, S wall if bit2, W wall if bit3
+Wall between cells only drawn once.
+Draw: top border, left border per cell, plus bottom of last row and right of last col.
+
+Canvas: cells are 80px wide, 70px tall. Start at x=40, y=40.
+-->
+
+
+
+<!-- Manual SVG drawing -->
+<!-- Cell size: W=80, H=70, origin: ox=40, oy=40 -->
+
+<!--
+cells[r][c] = value
+Row 0: 13,3,11,9,3
+Row 1: 11,10,12,6,10
+Row 2: 8,6,9,5,2
+Row 3: 10,13,2,9,6
+Row 4: 12,5,6,12,7
+
+N=1(bit0), E=2(bit1), S=4(bit2), W=8(bit3)
+hasN = v&1, hasE = v&2, hasS = v&4, hasW = v&8
+
+Strategy: for each cell, draw N wall and W wall if present.
+After all cells, draw S wall of bottom row and E wall of right col.
+-->
+
+<!-- stroke style -->
+<g stroke="var(--color-text-primary)" stroke-width="2.5" stroke-linecap="square" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+
+<!-- Row 0 (r=0), cells: 13,3,11,9,3 -->
+<!-- c=0, v=13: N=1,E=0,S=1,W=1 → draw N, draw W -->
+<line x1="40" y1="40" x2="120" y2="40" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>  <!-- N wall r0c0 -->
+<line x1="40" y1="40" x2="40" y2="110" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>  <!-- W wall r0c0 -->
+<!-- c=1, v=3: N=1,E=1,S=0,W=0 → draw N -->
+<line x1="120" y1="40" x2="200" y2="40" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- N wall r0c1 -->
+<!-- c=2, v=11: N=1,E=1,S=0,W=1 → draw N, draw W -->
+<line x1="200" y1="40" x2="280" y2="40" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- N wall r0c2 -->
+<line x1="200" y1="40" x2="200" y2="110" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r0c2 -->
+<!-- c=3, v=9: N=1,E=0,S=0,W=1 → draw N, draw W -->
+<line x1="280" y1="40" x2="360" y2="40" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- N wall r0c3 -->
+<line x1="280" y1="40" x2="280" y2="110" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r0c3 -->
+<!-- c=4, v=3: N=1,E=1,S=0,W=0 → draw N -->
+<line x1="360" y1="40" x2="440" y2="40" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- N wall r0c4 -->
+<!-- E wall of col4 -->
+<line x1="440" y1="40" x2="440" y2="110" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- E wall r0c4 (E=1 in v=3) -->
+
+<!-- Row 1 (r=1), y=110..180, cells: 11,10,12,6,10 -->
+<!-- c=0, v=11: N=1,E=1,S=0,W=1 → draw N, draw W -->
+<line x1="40" y1="110" x2="120" y2="110" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r1c0 -->
+<line x1="40" y1="110" x2="40" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- W wall r1c0 -->
+<!-- c=1, v=10: N=0,E=1,S=0,W=1 → draw W -->
+<line x1="120" y1="110" x2="120" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r1c1 -->
+<!-- c=2, v=12: N=0,E=0,S=1,W=1 → draw W -->
+<line x1="200" y1="110" x2="200" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r1c2 -->
+<!-- c=3, v=6: N=0,E=1,S=1,W=0 → nothing N or W -->
+<!-- c=4, v=10: N=0,E=1,S=0,W=1 → draw W -->
+<line x1="360" y1="110" x2="360" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r1c4 -->
+<!-- E wall col4 -->
+<line x1="440" y1="110" x2="440" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- E wall r1c4 (E=1) -->
+
+<!-- Row 2 (r=2), y=180..250, cells: 8,6,9,5,2 -->
+<!-- c=0, v=8: N=0,E=0,S=0,W=1 → draw W -->
+<line x1="40" y1="180" x2="40" y2="250" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- W wall r2c0 -->
+<!-- c=1, v=6: N=0,E=1,S=1,W=0 → nothing N or W -->
+<!-- c=2, v=9: N=1,E=0,S=0,W=1 → draw N, draw W -->
+<line x1="200" y1="180" x2="280" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r2c2 -->
+<line x1="200" y1="180" x2="200" y2="250" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r2c2 -->
+<!-- c=3, v=5: N=1,E=0,S=1,W=0 → draw N -->
+<line x1="280" y1="180" x2="360" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r2c3 -->
+<!-- c=4, v=2: N=0,E=1,S=0,W=0 → nothing N or W -->
+<!-- E wall col4 -->
+<!-- E=1 in v=2 -->
+<line x1="440" y1="180" x2="440" y2="250" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- E wall r2c4 -->
+
+<!-- Row 3 (r=3), y=250..320, cells: 10,13,2,9,6 -->
+<!-- c=0, v=10: N=0,E=1,S=0,W=1 → draw W -->
+<line x1="40" y1="250" x2="40" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- W wall r3c0 -->
+<!-- c=1, v=13: N=1,E=0,S=1,W=1 → draw N, draw W -->
+<line x1="120" y1="250" x2="200" y2="250" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r3c1 -->
+<line x1="120" y1="250" x2="120" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r3c1 -->
+<!-- c=2, v=2: N=0,E=1,S=0,W=0 → nothing N or W -->
+<!-- c=3, v=9: N=1,E=0,S=0,W=1 → draw N, draw W -->
+<line x1="280" y1="250" x2="360" y2="250" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r3c3 -->
+<line x1="280" y1="250" x2="280" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r3c3 -->
+<!-- c=4, v=6: N=0,E=1,S=1,W=0 → nothing N or W -->
+<!-- E wall col4 -->
+<line x1="440" y1="250" x2="440" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- E wall r3c4 (E=1) -->
+
+<!-- Row 4 (r=4), y=320..390, cells: 12,5,6,12,7 -->
+<!-- c=0, v=12: N=0,E=0,S=1,W=1 → draw W -->
+<line x1="40" y1="320" x2="40" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/> <!-- W wall r4c0 -->
+<!-- c=1, v=5: N=1,E=0,S=1,W=0 → draw N -->
+<line x1="120" y1="320" x2="200" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r4c1 -->
+<!-- c=2, v=6: N=0,E=1,S=1,W=0 → nothing N or W -->
+<!-- c=3, v=12: N=0,E=0,S=1,W=1 → draw W -->
+<line x1="280" y1="320" x2="280" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- W wall r4c3 -->
+<!-- c=4, v=7: N=1,E=1,S=1,W=0 → draw N -->
+<line x1="360" y1="320" x2="440" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- N wall r4c4 -->
+<!-- E wall col4 -->
+<line x1="440" y1="320" x2="440" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- E wall r4c4 (E=1) -->
+
+<!-- South walls of bottom row (r=4) -->
+<!-- c=0, v=12: S=1 → S wall -->
+<line x1="40" y1="390" x2="120" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- c=1, v=5: S=1 → S wall -->
+<line x1="120" y1="390" x2="200" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- c=2, v=6: S=1 → S wall -->
+<line x1="200" y1="390" x2="280" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- c=3, v=12: S=1 → S wall -->
+<line x1="280" y1="390" x2="360" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- c=4, v=7: S=1 → S wall -->
+<line x1="360" y1="390" x2="440" y2="390" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- Additional internal walls missed: E walls of non-col4 cells -->
+<!-- r0c1 E=1 (v=3, bit1=1) → wall between r0c1 and r0c2 at x=200 → already drawn as W of r0c2 -->
+<!-- r0c2 E=1 (v=11, bit1=1) → wall at x=280 → already W of r0c3 -->
+<!-- r0c4 E=1 → drawn above -->
+<!-- r1c0 E=1 (v=11) → wall at x=120, y=110..180 → already W of r1c1 -->
+<!-- r1c1 E=1 (v=10) → wall at x=200, y=110..180 → already W of r1c2 -->
+<!-- r1c3 E=1 (v=6) → wall at x=360, y=110..180 → already W of r1c4 -->
+<!-- r2c1 E=1 (v=6) → wall at x=200, y=180..250 → already W of r2c2 -->
+<!-- r3c0 E=1 (v=10) → wall at x=120, y=250..320 -->
+<line x1="120" y1="250" x2="120" y2="320" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- already drawn above as W of r3c1, OK -->
+<!-- r3c2 E=1 (v=2) → wall at x=280, y=250..320 → already W of r3c3 -->
+<!-- r4c2 E=1 (v=6) → wall at x=280, y=320..390 → already W of r4c3 -->
+
+<!-- S walls not in bottom row -->
+<!-- r0: S walls where S=1 -->
+<!-- r0c0 v=13: S=1 → wall y=110 x=40..120 → already N of r1c0 ✓ -->
+<!-- r0c2 v=11: S=0; r0c3 v=9: S=0; r0c4 v=3: S=0 -->
+<!-- r0c1 v=3: S=0 -->
+
+<!-- r1: S walls -->
+<!-- r1c2 v=12: S=1 → y=180, x=200..280 → N of r2c2? N of r2c2 drawn already ✓ actually N of r2c2 is at y=180 -->
+<!-- r1c3 v=6: S=1 → y=180, x=280..360 -->
+<line x1="280" y1="180" x2="360" y2="180" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- S of r1c3 = N of r2c3 drawn already (N of r2c3 v=5, N=1) ✓ -->
+
+<!-- r2: S walls -->
+<!-- r2c1 v=6: S=1 → y=250, x=120..200 -->
+<line x1="120" y1="250" x2="200" y2="250" style="fill:rgb(0, 0, 0);stroke:rgb(250, 249, 245);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:square;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/><!-- S of r2c1 = N of r3c1, already drawn ✓ -->
+<!-- r2c3 v=5: S=1 → y=250, x=280..360 → check if N of r3c3: yes, drawn ✓ -->
+
+<!-- r3: S walls -->
+<!-- r3c1 v=13: S=1 → y=320, x=120..200 = N of r4c1 drawn ✓ -->
+<!-- r3c4 v=6: S=1 → y=320, x=360..440 = N of r4c4 drawn ✓ -->
+
+</g>
+
+<!-- Cell coordinates label (small) -->
+</svg>
