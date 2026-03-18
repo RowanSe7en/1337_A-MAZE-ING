@@ -1,7 +1,7 @@
 import random
 
 entry = (0, 0)
-exit_ = (14, 13)
+exit_ = (4, 2)
 
 parents = {}
 path_list = []
@@ -129,8 +129,8 @@ class MazeGenerator:
         return path_str
 
 
-width = 15
-height = 15
+width = 3
+height = 5
 # seed = 22
 seed = 10
 
@@ -142,8 +142,8 @@ path = p.solve_maze(output_file)
 vis = p.visited
 
 
-# with open(output_file, 'r') as output_maze:
-#     print(output_maze.read())
+with open(output_file, 'r') as output_maze:
+    print(output_maze.read())
 
 # for i in range(0, height):
 #     for j in range(0, width):
@@ -217,3 +217,52 @@ def ascii_render():
     print("+")
 
 ascii_render()
+
+def emoji_render():
+    path_coords = set()
+    cur = exit_
+
+    while cur in parents:
+        py, px, _ = parents[cur]
+        path_coords.add(cur)
+        cur = (py, px)
+
+    path_coords.add(entry)
+
+    for y in range(height):
+
+        for x in range(width):
+            print("🧱", end="")
+            if maze[y][x] & (1 << 0):
+                print("🧱" * 2, end="")
+            else:
+                print("⬜" * 2, end="")
+        print("🧱")
+
+        for x in range(width):
+            left = "🧱" if maze[y][x] & (1 << 3) else "⬜"
+
+            if (y, x) == entry:
+                content = "🏂" + "⬜"
+            elif (y, x) == exit_:
+                content = "🚗" + "⬜"
+            elif (y, x) in path_coords:
+                content = "🔳" * 2
+            else:
+                content = "⬜" * 2
+
+            print(left + content, end="")
+
+        right = "🧱" if maze[y][width - 1] & (1 << 1) else "⬜"
+        print(right)
+
+    for x in range(width):
+        print("🧱", end="")
+        if maze[height - 1][x] & (1 << 2):
+            print("🧱" * 2, end="")
+        else:
+            print("⬜" * 2, end="")
+    print("🧱")
+
+
+emoji_render()
