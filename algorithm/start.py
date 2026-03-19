@@ -1,7 +1,7 @@
 import random
 
 entry = (0, 0)
-exit_ = (1, 2)
+exit_ = (2, 6)
 
 parents = {}
 path_list = []
@@ -298,13 +298,13 @@ class MazeGenerator:
         return path_str
 
 
-width = 9
-height = 7
+width = 7
+height = 3
 # seed = 22
 seed = 10
 
-p = MazeGenerator(width, height)
-p.where_is_42()
+p = MazeGenerator(width, height, seed)
+# p.where_is_42()
 maze = p.generate_perfect_maze()
 # maze = p.generate_non_perfect_maze()
 
@@ -381,38 +381,45 @@ def emoji_render():
 
     for y in range(height):
 
+        print("🧱", end="")
+        
         for x in range(width):
-            print("🧱", end="")
             if maze[y][x] & (1 << 0):
-                print("🧱" * 2, end="")
+                print("🧱🧱", end="")
             else:
-                print("⬜" * 2, end="")
+                print("⬜", end="")
         print("🧱")
 
         for x in range(width):
-            left = "🧱" if maze[y][x] & (1 << 3) else "⬜"
+            # if x == 0:
+            #     print("🧱", end="")
+            if (maze[y][x] == 15 or maze[y][x] & 1 << 3):
+                left = "🧱"
+            elif (maze[y][x] == 16):
+                left = "🟥"
+            else:
+                left = ""
 
             if (y, x) == entry:
-                content = "🏂" + "⬜"
+                content = "🏂"
             elif (y, x) == exit_:
-                content = "🚗" + "⬜"
+                content = "🚗🚗"
             elif (y, x) in path_coords:
-                content = "🔳" * 2
+                content = "🔳🔳"
             else:
-                content = "⬜" * 2
+                content = "⬜⬜"
 
             print(left + content, end="")
 
-        right = "🧱" if maze[y][width - 1] & (1 << 1) else "⬜"
+        right = "🧱" if maze[y][width - 1] & (1 << 1) else ""
         print(right)
 
     for x in range(width):
-        print("🧱", end="")
         if maze[height - 1][x] & (1 << 2):
-            print("🧱" * 2, end="")
+            print("🧱🧱", end="")
         else:
-            print("⬜" * 2, end="")
+            print("⬜⬜", end="")
     print("🧱")
 
 
-# emoji_render()
+emoji_render()

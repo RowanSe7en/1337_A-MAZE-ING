@@ -1,24 +1,18 @@
-import random
+maze = [
+    [1, 0, 1, 1],
+    [1, 0, 0, 1],
+    [1, 1, 0, 1],
+]
+def draw_maze(maze):
+    WALL = "\033[47m  \033[0m"   # white background
+    PATH = "\033[40m  \033[0m"   # black background
 
-random.seed(42)
-print(random.randint(1, 100))
-print(random.randint(1, 100))
+    for row in maze:
+        for cell in row:
+            if cell == 1:
+                print(WALL, end="")
+            else:
+                print(PATH, end="")
+        print()
 
-
-
-print(random.randint(1, 100))
-print(random.randint(1, 100))
-
-
-
-# seeded generator
-rng_seeded = random.Random(42)
-
-print(rng_seeded.randint(1, 100))
-print(rng_seeded.randint(1, 100))
-
-# unseeded (system random)
-rng_true = random.Random()
-
-print(rng_true.randint(1, 100))
-print(rng_true.randint(1, 100))
+draw_maze(maze)
