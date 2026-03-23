@@ -389,44 +389,31 @@ def emoji_render():
 
     path_coords.add(entry)
 
-    for i in range(1, 10):
-        print(f"{i}\uFE0F\u20E3", end=" ")
-    for i in range(0, 6):
-        print(f"{i}\uFE0F\u20E3", end=" ")
-    print()
-
     for y in range(height):
-
         print("⬛", end="")
-        
+
         for x in range(width):
-            if (maze[y][x] & (1 << 0) or (y, x) in ft_coords) and maze[y - 1][x] != 16:
-                print("⬛⬛", end="")
-            elif maze[y][x] & (1 << 0):
+            if maze[y][x] & 1 or ((y, x) in ft_coords and maze[y - 1][x] != 16):
                 print("⬛⬛", end="")
             else:
-                xx = 1 if x < width - 1 else 0
+                content = "⬛"
                 if maze[y][x] == 16:
                     left = "🟦"
-                    content = "⬛"
                 elif (y, x) in path_coords and ((y > 0 and (y - 1, x) in path_coords) or (y - 1, x) == entry):
                     left = "🟩"
-                    content = "⬛"
-
                 else:
                     left = "⬜"
-                    content = "⬛"
 
                 print(left + content, end="")
         print("")
 
         for x in range(width):
-            if (y, x) in path_coords and ((y, x - 1) in path_coords or (y, x - 1) == entry) and not maze[y][x] & 1 << 3:
+            if (y, x) in path_coords and (x > 0 and (y, x - 1) in path_coords or (y, x - 1) == entry) and not maze[y][x] & 1 << 3:
                 left = "🟩"
             elif maze[y][x] == 16 and maze[y][x - 1] == 16:
                 left = "🟦"
             elif maze[y][x] & 1 << 3 or maze[y][x] & 1 << 4:
-                left = "⬛"            
+                left = "⬛"
             else:
                 left = "⬜"
 
@@ -455,3 +442,82 @@ def emoji_render():
 
 
 emoji_render()
+
+def ansi_render():
+
+    BLACK   = "\033[40m  \033[0m"   # walls
+    WHITE   = "\033[100m  \033[0m"  # floor (dark gray)
+    GREEN   = "\033[103m  \033[0m"  # path (yellow = lava glow)
+    BLUE    = "\033[101m  \033[0m"  # visited (red heat)
+    MAGENTA = "\033[105m  \033[0m"  # exit (pink/purple core)
+
+    def get_block(color):
+        return color
+
+    path_coords = set()
+    cur = exit_
+
+    while cur in parents:
+        py, px, _ = parents[cur]
+        path_coords.add(cur)
+        cur = (py, px)
+
+    path_coords.add(entry)
+
+    for y in range(height):
+        print(BLACK, end="")
+
+        for x in range(width):
+            if maze[y][x] & 1 or ((y, x) in ft_coords and maze[y - 1][x] != 16):
+                print(BLACK + BLACK, end="")
+            else:
+                if maze[y][x] == 16:
+                    left = BLUE
+                elif (y, x) in path_coords and (
+                    (y > 0 and (y - 1, x) in path_coords) or (y - 1, x) == entry
+                ):
+                    left = GREEN
+                else:
+                    left = WHITE
+
+                print(left + BLACK, end="")
+        print()
+
+        for x in range(width):
+            if (
+                (y, x) in path_coords
+                and (x > 0 and ((y, x - 1) in path_coords or (y, x - 1) == entry))
+                and not maze[y][x] & (1 << 3)
+            ):
+                left = GREEN
+            elif maze[y][x] == 16 and maze[y][x - 1] == 16:
+                left = BLUE
+            elif maze[y][x] & (1 << 3) or maze[y][x] & (1 << 4):
+                left = BLACK
+            else:
+                left = WHITE
+
+            if (y, x) == entry:
+                content = BLUE
+            elif (y, x) == exit_:
+                content = MAGENTA
+            elif (y, x) in path_coords:
+                content = GREEN
+            elif maze[y][x] == 16:
+                content = BLUE
+            else:
+                content = WHITE
+
+            print(left + content, end="")
+
+        right = BLACK if maze[y][width - 1] & (1 << 1) else ""
+        print(right)
+
+    for x in range(width):
+        if maze[height - 1][x] & (1 << 2):
+            print(BLACK + BLACK, end="")
+        else:
+            print(WHITE + WHITE, end="")
+    print(BLACK)
+
+ansi_render()
