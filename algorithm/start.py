@@ -5,6 +5,7 @@ exit_ = (6, 7)
 
 parents = {}
 path_list = []
+ft_coords = []
 
 class MazeGenerator:
 
@@ -41,22 +42,26 @@ class MazeGenerator:
             ft_y += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         for i in range(2):
             ft_x += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         for i in range(2):
             ft_y -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         ft_y += 2
         for i in range(2):
             ft_y += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         # 2
         ft_x += 5
@@ -65,26 +70,31 @@ class MazeGenerator:
             ft_x -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         for i in range(2):
             ft_y -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         for i in range(2):
             ft_x += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         for i in range(2):
             ft_y -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
         for i in range(2):
             ft_x -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
+            ft_coords.append((ft_y, ft_x))
 
     def generate_perfect_maze(self): #dfs
 
@@ -447,6 +457,14 @@ ascii_render()
 #             print("⬜⬜", end="")
 #     print("⬛")
 
+for i in range(height):
+    for j in range(width):
+        print(maze[i][j], end=" ")
+    print()
+
+# for x in ft_coords:
+#     print(x)
+
 def emoji_render():
     path_coords = set()
     cur = exit_
@@ -469,18 +487,18 @@ def emoji_render():
         print("⬛", end="")
         
         for x in range(width):
-            if maze[y][x] & (1 << 0):
+            if (maze[y][x] & (1 << 0) or (y, x) in ft_coords) and maze[y - 1][x] != 16:
+                print("⬛⬛", end="")
+            elif maze[y][x] & (1 << 0):
                 print("⬛⬛", end="")
             else:
                 xx = 1 if x < width - 1 else 0
-
-                if (y, x) in path_coords and ((y > 0 and (y - 1, x) in path_coords) or (y - 1, x) == entry):
+                if maze[y][x] == 16:
+                    left = "🟦"
+                    content = "⬛"
+                elif (y, x) in path_coords and ((y > 0 and (y - 1, x) in path_coords) or (y - 1, x) == entry):
                     left = "🟩"
                     content = "⬛"
-
-                elif y > 0 and maze[y][x] != 15 and maze[y - 1][x + xx] == 16:
-                    left = "⬜"
-                    content = "🟦"
 
                 else:
                     left = "⬜"
@@ -494,8 +512,10 @@ def emoji_render():
             #     print("⬛", end="")
             if (y, x) in path_coords and ((y, x - 1) in path_coords or (y, x - 1) == entry) and not maze[y][x] & 1 << 3:
                 left = "🟩"
+            elif maze[y][x] == 16 and maze[y][x - 1] == 16:
+                left = "🟦"
             elif maze[y][x] & 1 << 3 or maze[y][x] & 1 << 4:
-                left = "⬛"
+                left = "⬛"            
             else:
                 left = "⬜"
 
