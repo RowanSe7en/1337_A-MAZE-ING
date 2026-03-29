@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import sys
 from parsing.parse_data import open_file, parse_data, check_prop, check_all_available
-import algorithm.start as r
+# import algorithm.start as r
 from menu import menu
+from algorithm.maze_generator import *
+from algorithm.maze_solver import *
 
 def get_data():
     if len(sys.argv) != 2:
@@ -20,7 +22,9 @@ def get_data():
 
 def main():
     data = get_data()
-    r.run(data)
+    # r.run(data)
+    maze = generator_entery(11, 10, 22, (0, 0), (8, 8), True)
+    solver_entery(11, 10, (0, 0), (8, 8), "my_file", "dfs", maze)
     # num = menu()
     # while(True):
     #     if int(num) ==  1:

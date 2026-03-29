@@ -1,6 +1,5 @@
-from maze_generator import *
-
-path_list = []
+from algorithm.maze_generator import *
+from algorithm.maze_renderer import *
 
 class MazeSolver:
 
@@ -12,7 +11,7 @@ class MazeSolver:
         self.exit_ = exit_
         self.visited = [[False for _ in range(self.width)] for _ in range(self.height)]
 
-    def bfs_solve_maze(self, output_file): #bfs
+    def bfs_solve_maze(self, maze): #bfs
 
         en_y, en_x = self.entry
         ex_y, ex_x = self.exit_
@@ -20,6 +19,7 @@ class MazeSolver:
         self.visited[en_y][en_x] = True
 
         queue = [self.entry]
+        parents = {}
 
         while queue:
 
@@ -38,37 +38,17 @@ class MazeSolver:
 
                     if not self.visited[ny][nx]:
 
-                        if not (self.maze[y][x] & wall):
+                        if not (maze[y][x] & wall):
 
                             self.visited[ny][nx] = True
                             parents[(ny, nx)] = (y, x, direc)
                             queue.append((ny, nx))
 
-        global path_list
+        return parents
 
-        current = self.exit_
+        
 
-        while current != self.entry:
-
-            py, px, direction = parents[current]
-            path_list.append(direction)
-            current = (py, px)
-
-        path_list.reverse()
-        path_str = "".join(path_list)
-
-        with open(output_file, 'w') as output_maze:
-
-            for row in self.maze:
-
-                output_maze.write("".join(f"{cell:X}" for cell in row))
-                output_maze.write("\n")
-
-            output_maze.write(f"\n{en_y}, {en_x}\n")
-            output_maze.write(f"{ex_y}, {ex_x}\n")
-            output_maze.write(path_str)
-
-    def dfs_solve_maze(self, output_file): #dfs
+    def dfs_solve_maze(self, maze): #dfs
 
         en_y, en_x = self.entry
         ex_y, ex_x = self.exit_
@@ -76,6 +56,7 @@ class MazeSolver:
         self.visited[en_y][en_x] = True
 
         queue = [self.entry]
+        parents = {}
 
         while queue:
 
@@ -96,7 +77,7 @@ class MazeSolver:
 
                     if not self.visited[ny][nx]:
 
-                        if not (self.maze[y][x] & wall):
+                        if not (maze[y][x] & wall):
 
                             neighbors.append((ny, nx, wall, direc))
 
@@ -112,9 +93,12 @@ class MazeSolver:
             else:
                 queue.pop()
 
-        current = self.exit_
+        return parents
 
-        global path_list
+    def extract_the_path(self, output_file, maze, parents):
+
+        path_list = []
+        current = self.exit_
 
         while current != self.entry:
 
@@ -127,21 +111,27 @@ class MazeSolver:
 
         with open(output_file, 'w') as output_maze:
 
-            for row in self.maze:
+            for row in maze:
 
-                output_maze.write("".join(f"{cell:X}" for cell in row))
+                output_maze.write("".join(f"{cell-1:X}" if cell == 16 else f"{cell:X}" for cell in row))
                 output_maze.write("\n")
 
+            en_y, en_x = self.entry
+            ex_y, ex_x = self.exit_
             output_maze.write(f"\n{en_y}, {en_x}\n")
             output_maze.write(f"{ex_y}, {ex_x}\n")
             output_maze.write(path_str)
 
 
-def solver_entery(width, height, entry, exit_, out_file, solve):
+def solver_entery(width, height, entry, exit_, out_file, solve, maze):
 
     maze_solver = MazeSolver(width, height, entry, exit_)
 
     if solve.upper() == "DFS":
-        maze_solver.dfs_solve_maze(out_file)
+        parents = maze_solver.dfs_solve_maze(maze)
     elif solve.upper() == "BFS":
-        maze_solver.bfs_solve_maze(out_file)
+        parents = maze_solver.bfs_solve_maze(maze)
+
+    maze_solver.extract_the_path(out_file, maze, parents)
+    MazeRenderer(width, height, entry, exit_, maze, parents)
+

@@ -1,6 +1,5 @@
 import random
 
-parents = {}
 ft_coords = []
 
 class MazeGenerator:
