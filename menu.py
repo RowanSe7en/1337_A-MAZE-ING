@@ -1,15 +1,47 @@
+from theme_palette import *
 
+import sys
 
+# تعريف الألوان كأكواد بسيطة
+GOLD = "\033[1;33m"
+CYAN = "\033[1;36m"
+MAGENTA = "\033[1;35m"
+GREEN = "\033[1;32m"
+RED = "\033[1;31m"
+RESET = "\033[0m"
+BOLD = "\033[1m"
 
 def menu():
-    print("\n=== A-MAZE-ING ===")
-    print("1 - Re-generate a new maze")
-    print("2 - show/hide path from entry to exit")
-    print("3 - Rotate maze color")
-    print("4 - Quit")
-    choise = input("Choise? (1-4): ")
+    print(f"\n{GOLD}╔═══════════════════════════════════════╗{RESET}")
+    print(f"{GOLD}║{RESET}  {BOLD}{CYAN}🧩  A-MAZE-ING EXPLORER  🧩{RESET}      {GOLD}    ║{RESET}")
+    print(f"{GOLD}╠═══════════════════════════════════════╣{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}1 -{RESET} 🔄 Re-generate a new maze    {GOLD}    ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}2 -{RESET} 📍 Show/hide path from entry {GOLD}    ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}3 -{RESET} 🎨 Rotate maze color         {GOLD}    ║{RESET}")
+    print(f"{GOLD}║{RESET}  {RED}4 -{RESET} 🚪 Quit                      {GOLD}    ║{RESET}")
+    print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
+    
+    # نفس منطقك الأصلي بالضبط
+    choise = input(f"{BOLD}{MAGENTA}Choise? (1-4): {RESET}")
     return choise
 
 
 def color_menu():
-    print("")
+    print(f"\n{GOLD}╔═══════════════════════════════════════╗{RESET}")
+    print(f"{GOLD}║{RESET}  {BOLD}{CYAN}🎨  SELECT THEME REALM  🎨{RESET}       {GOLD}    ║{RESET}")
+    print(f"{GOLD}╠═══════════════════════════════════════╣{RESET}")
+    print(f"{GOLD}║{RESET}  {RED}1 - ash_lava Theme{RESET}             {GOLD}      ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}2 - forest Theme{RESET}               {GOLD}      ║{RESET}")
+    print(f"{GOLD}║{RESET}  {CYAN}3 - ice theme{RESET}                  {GOLD}      ║{RESET}")
+    print(f"{GOLD}║{RESET}  {MAGENTA}4 - neon theme{RESET}                 {GOLD}      ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GOLD}5 - sunset theme{RESET}               {GOLD}      ║{RESET}")
+    print(f"{GOLD}║{RESET}  {BOLD}{GREEN}6 - matrix theme{RESET}               {GOLD}      ║{RESET}")
+    print(f"{GOLD}║{RESET}  {BOLD}7 - Randomize{RESET}                  {GOLD}      ║{RESET}")
+    print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
+    
+    # نفس منطقك الأصلي بالضبط
+    n = input(f"{BOLD}{MAGENTA}Chose Theme: {RESET} ")
+    return n
+
+# تذكر عند معالجة الخيار رقم 4 في الكود الرئيسي:
+# استخدم sys.exit(0) لتجنب "Error 1" في الـ Makefile

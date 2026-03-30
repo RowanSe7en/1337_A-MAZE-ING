@@ -1,6 +1,7 @@
 from algorithm.maze_generator import ft_coords
 import random
 import time
+from theme_palette import *
 
 def ascii_render(width, height, entry, exit_, maze, path_coords, is_solved):
 
@@ -94,70 +95,32 @@ def emoji_render(width, height, entry, exit_, maze, path_coords, is_solved):
     print("⬛")
 
 
-themes = {
-    "ash_lava":{
-        "wall_color":"\033[40m  \033[0m",
-        "road_color": "\033[100m  \033[0m",
-        "path_color": "\033[103m  \033[0m",
-        "entery_color": "\033[101m  \033[0m",
-        "exit_color": "\033[105m  \033[0m"
-    },
-    "forest": {
-        "wall_color": "\033[42m  \033[0m",    # dark green trees
-        "road_color": "\033[102m  \033[0m",   # bright grass
-        "path_color": "\033[100m  \033[0m",   # rocks
-        "entery_color": "\033[44m  \033[0m",  # river start
-        "exit_color": "\033[46m  \033[0m"     # water glow
-    },
 
-    "ice": {
-        "wall_color": "\033[107m  \033[0m",   # snow white
-        "road_color": "\033[47m  \033[0m",    # light snow
-        "path_color": "\033[106m  \033[0m",   # icy blue
-        "entery_color": "\033[104m  \033[0m", # cold blue
-        "exit_color": "\033[46m  \033[0m"     # cyan exit
-    },
-
-    "neon": {
-        "wall_color": "\033[45m  \033[0m",    # neon purple
-        "road_color": "\033[105m  \033[0m",   # bright magenta
-        "path_color": "\033[46m  \033[0m",    # neon cyan
-        "entery_color": "\033[102m  \033[0m", # neon green
-        "exit_color": "\033[103m  \033[0m"    # neon yellow
-    },
-
-    "sunset": {
-        "wall_color": "\033[41m  \033[0m",    # red sky
-        "road_color": "\033[101m  \033[0m",   # bright red
-        "path_color": "\033[43m  \033[0m",    # orange sun
-        "entery_color": "\033[103m  \033[0m", # bright orange
-        "exit_color": "\033[45m  \033[0m"     # purple dusk
-    },
-
-    "matrix": {
-        "wall_color": "\033[40m  \033[0m",    # black void
-        "road_color": "\033[42m  \033[0m",    # green code
-        "path_color": "\033[102m  \033[0m",   # bright green
-        "entery_color": "\033[100m  \033[0m", # dark grey
-        "exit_color": "\033[47m  \033[0m"     # white portal
-    },
-}
 
 is_changed = False
 previous_color = None
 
-def ansi_render(width, height, entry, exit_, maze, path_coords, is_solved, is_colored):
+def ansi_render(width, height, entry, exit_, maze, path_coords, is_solved, is_colored, theme_id):
     
     global is_changed
     global previous_color
 
     if is_colored:
-    
-        random.seed(time.time())
-        random_theme_key = random.choice(list(themes.keys()))
-        theme = themes[random_theme_key]
-        previous_color = theme
-        is_changed = True
+        if theme_id == "7":
+            random.seed(time.time())
+            random_theme_key = random.choice(list(themes.keys()))
+            theme = themes[random_theme_key]
+            previous_color = theme
+            is_changed = True
+        else:
+            theme_mapper_id = theme_mapper.get(theme_id, None)
+            if theme_mapper_id:
+                theme = themes[theme_mapper_id]
+                previous_color = theme
+                is_changed = True
+            else:
+                print("Invalid Choise")
+        
 
     elif not is_colored and is_changed:
         theme = previous_color
@@ -229,7 +192,7 @@ def ansi_render(width, height, entry, exit_, maze, path_coords, is_solved, is_co
     print(wall_color)
 
 
-def MazeRenderer(width, height, entry, exit_, maze, parents, is_solved, is_colored):
+def MazeRenderer(width, height, entry, exit_, maze, parents, is_solved, is_colored, theme_id):
 
     path_coords = set()
     cur = exit_
@@ -244,4 +207,4 @@ def MazeRenderer(width, height, entry, exit_, maze, parents, is_solved, is_color
 
     # ascii_render(width, height, entry, exit_, maze, path_coords, is_solved)
     # emoji_render(width, height, entry, exit_, maze, path_coords, is_solved)
-    ansi_render(width, height, entry, exit_, maze, path_coords, is_solved, is_colored)
+    ansi_render(width, height, entry, exit_, maze, path_coords, is_solved, is_colored, theme_id)

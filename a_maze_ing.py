@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from parsing.parse_data import open_file, parse_data, check_prop, check_all_available
-from menu import menu
+from menu import menu, color_menu
 from algorithm.maze_generator import *
 from algorithm.maze_solver import *
 from algorithm.maze_renderer import *
@@ -21,28 +21,38 @@ def get_data():
         raise ValueError(f"The output file cannot be the same name as the config file ")
     return require
 
-def rendering(is_solved, data, is_colored):
+def rendering(is_solved, data, is_colored, theme_id=None):
     maze = generator_entery(data["width"], data["height"], data.get("seed",None), data["entry"], data["exit"], data["perfect"])
     parents = solver_entery(data["width"], data["height"], data["entry"], data["exit"], data["output_file"], data.get("solve", None), maze)
-    MazeRenderer(data["width"], data["height"], data["entry"], data["exit"], maze, parents, is_solved, is_colored)
+    MazeRenderer(data["width"], data["height"], data["entry"], data["exit"], maze, parents, is_solved, is_colored, theme_id)
     
 def main():
+    print("""
+     █████╗     ███╗   ███╗ █████╗ ███████╗███████╗    ██╗███╗   ██╗ ██████╗ 
+    ██╔══██╗    ████╗ ████║██╔══██╗╚══███╔╝██╔════╝    ██║████╗  ██║██╔════╝ 
+    ███████║    ██╔████╔██║███████║  ███╔╝ █████╗      ██║██╔██╗ ██║██║  ███╗
+    ██╔══██║    ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝      ██║██║╚██╗██║██║   ██║
+    ██║  ██║    ██║ ╚═╝ ██║██║  ██║███████╗███████╗    ██║██║ ╚████║╚██████╔╝
+    ╚═╝  ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝╚═╝  ╚═══╝ ╚═════╝
+                                                   - by : brouane / bmarbouh
+    """)
     try:
         data = get_data()
         is_solved = False
         is_colored = False
-        rendering(is_solved, data, is_colored)
+        rendering(is_solved, data, is_colored,theme_id=None)
         while(True):
             try:
                 num = menu()
                 if num == "":
                     print("YOU LEFT THE MAZE, SEE YOU LATER ALLIGATOR")
                     exit(1)
-                num = int(menu())
+                else:
+                    num = int(num)
             except Exception:
                 raise ValueError ("choise Not Valid number")
             if num ==  1:
-                rendering(is_solved, data)
+                rendering(is_solved, data, is_colored)
             elif num ==  2:
                 if is_solved:
                     is_solved = False
@@ -50,8 +60,10 @@ def main():
                     is_solved = True
                 rendering(is_solved, data, is_colored)
             elif num == 3:
+                color_choise = color_menu()
+
                 is_colored = True
-                rendering(is_solved,data, is_colored)
+                rendering(is_solved,data, is_colored,color_choise)
                 is_colored = False 
             elif num == 4:
                 break
