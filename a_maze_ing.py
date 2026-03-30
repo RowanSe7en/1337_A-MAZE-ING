@@ -30,32 +30,47 @@ def entery_point(data, is_colored, theme_id=None):
     parents = algorithm.solver_entery(data["width"], data["height"], data["entry"], data["exit"], data["output_file"], data.get("solve", None), maze)
 
     return { "maze": maze, "parents": parents}
-    
+
+class C:
+    reset  = "\033[0m"
+    bold   = "\033[1m"
+    dim    = "\033[2m"
+
+    red    = "\033[31m"
+    green  = "\033[32m"
+    yellow = "\033[33m"
+    blue   = "\033[34m"
+    magenta= "\033[35m"
+    cyan   = "\033[36m"
+    white  = "\033[37m"
+
+
 def main():
 
     os.system("clear")
 
-    print(r"""
+    print(f"""{C.cyan}{C.dim}
     ╔══════════════════════════════════════════════════════════════════════════════════╗
     ║                                                                                  ║
-    ║      █████╗     ███╗   ███╗ █████╗ ███████╗███████╗    ██╗███╗   ██╗ ██████╗     ║
-    ║     ██╔══██╗    ████╗ ████║██╔══██╗╚══███╔╝██╔════╝    ██║████╗  ██║██╔════╝     ║
-    ║     ███████║    ██╔████╔██║███████║  ███╔╝ █████╗      ██║██╔██╗ ██║██║  ███╗    ║
-    ║     ██╔══██║    ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝      ██║██║╚██╗██║██║   ██║    ║
-    ║     ██║  ██║    ██║ ╚═╝ ██║██║  ██║███████╗███████╗    ██║██║ ╚████║╚██████╔╝    ║
-    ║     ╚═╝  ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝╚═╝  ╚═══╝ ╚═════╝     ║
+    ║{C.magenta}{C.bold}      █████╗     ███╗   ███╗ █████╗ ███████╗███████╗    ██╗███╗   ██╗ ██████╗     {C.cyan}{C.dim}║
+    ║{C.magenta}{C.bold}     ██╔══██╗    ████╗ ████║██╔══██╗╚══███╔╝██╔════╝    ██║████╗  ██║██╔════╝     {C.cyan}{C.dim}║
+    ║{C.magenta}{C.bold}     ███████║    ██╔████╔██║███████║  ███╔╝ █████╗      ██║██╔██╗ ██║██║  ███╗    {C.cyan}{C.dim}║
+    ║{C.magenta}{C.bold}     ██╔══██║    ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝      ██║██║╚██╗██║██║   ██║    {C.cyan}{C.dim}║
+    ║{C.magenta}{C.bold}     ██║  ██║    ██║ ╚═╝ ██║██║  ██║███████╗███████╗    ██║██║ ╚████║╚██████╔╝    {C.cyan}{C.dim}║
+    ║{C.magenta}{C.bold}     ╚═╝  ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝╚═╝  ╚═══╝ ╚═════╝     {C.cyan}{C.dim}║
     ║                                                                                  ║
-    ║                           🧩  A - M A Z E - I N G  🧩                            ║
+    ║{C.yellow}{C.bold}                           🧩  A - M A Z E - I N G  🧩                            {C.cyan}{C.dim}║
     ║                                                                                  ║
-    ║                         Created by brouane / bmarbouh                            ║
+    ║{C.white}                         Created by brouane / bmarbouh                            {C.cyan}{C.dim}║
     ╠══════════════════════════════════════════════════════════════════════════════════╣
     ║                                                                                  ║
-    ║   • Generate perfect & imperfect mazes                                           ║
-    ║   • Visualize solving algorithms                                                 ║
-    ║   • Optional colored rendering                                                   ║
+    ║{C.green}   ● Generate perfect & imperfect mazes                                           {C.cyan}{C.dim}║
+    ║{C.green}   ● Visualize solving algorithms                                                 {C.cyan}{C.dim}║
+    ║{C.green}   ● Optional colored rendering                                                   {C.cyan}{C.dim}║
     ║                                                                                  ║
     ╚══════════════════════════════════════════════════════════════════════════════════╝
-""")
+    {C.reset}""")
+
     try:
 
         data = get_data()
