@@ -182,7 +182,7 @@ def ansi_render(width, height, entry, exit_, maze, path_coords, is_solved, is_co
 
         right = wall_color if maze[y][width - 1] & (1 << 1) else ""
         print(right)
-        # time.sleep(0.10)
+        # time.sleep(0.09)
 
     for x in range(width):
         if maze[height - 1][x] & (1 << 2):

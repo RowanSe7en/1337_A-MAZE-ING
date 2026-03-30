@@ -2,7 +2,6 @@ from theme_palette import *
 
 import sys
 
-# تعريف الألوان كأكواد بسيطة
 GOLD = "\033[1;33m"
 CYAN = "\033[1;36m"
 MAGENTA = "\033[1;35m"
@@ -21,7 +20,6 @@ def menu():
     print(f"{GOLD}║{RESET}  {RED}4 -{RESET} 🚪 Quit                      {GOLD}    ║{RESET}")
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
     
-    # نفس منطقك الأصلي بالضبط
     choise = input(f"{BOLD}{MAGENTA}Choise? (1-4): {RESET}")
     return choise
 
@@ -39,9 +37,5 @@ def color_menu():
     print(f"{GOLD}║{RESET}  {BOLD}7 - Randomize{RESET}                  {GOLD}      ║{RESET}")
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
     
-    # نفس منطقك الأصلي بالضبط
     n = input(f"{BOLD}{MAGENTA}Chose Theme: {RESET} ")
     return n
-
-# تذكر عند معالجة الخيار رقم 4 في الكود الرئيسي:
-# استخدم sys.exit(0) لتجنب "Error 1" في الـ Makefile
