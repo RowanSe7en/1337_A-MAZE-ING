@@ -1,21 +1,17 @@
 HEIGHT=17
 WIDTH=19
 ENTRY=0,8
-EXIT=15,1
+EXIT=15,0
 OUTPUT_FILE=maze.txt
 PeRFeCT=True
 
 
 # Extra Keys
-#SEED=42
-SOLVE=
+#SEED=3
+SOLVE=dfs
 
 # GENERATE_TIME better to be longer than 0.04
 GENERATE_TIME=0
 SOLVE_TIME=0.01
 
 ANIMATION=False
-COLOR=
-
-
-#max  50 / 25

@@ -12,11 +12,11 @@ def get_data():
 
     if len(sys.argv) != 2:
         print("Error: must Entre valid args 'a_maze_ing.py config.txt'")
-        sys.exit(1)
+        sys.exit(0)
 
     if not sys.argv[1].endswith(".txt"):
         print(f"Error : {sys.argv[1]} not a valid file")
-        sys.exit(1)
+        sys.exit(0)
 
     f = open_file(sys.argv[1])
 
@@ -93,7 +93,7 @@ def main():
 
                 if num == "":
                     print("YOU LEFT THE MAZE, SEE YOU LATER ALLIGATOR")
-                    exit(1)
+                    exit(0)
                 else:
                     num = int(num)
 
@@ -134,7 +134,7 @@ def main():
     except KeyboardInterrupt:
 
         print("\nYOU LEFT THE MAZE, SEE YOU LATER ALLIGATOR")
-        exit(1)
+        exit(0)
 
     except Exception as error:
         ascii_landing()

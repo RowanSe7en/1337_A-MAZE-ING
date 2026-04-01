@@ -23,21 +23,21 @@ themes = {
         "exit_color":   "\033[48;5;231m  \033[0m",  # Petal white
         "ft_pattern":   "\033[48;5;211m  \033[0m",  # Vivid blossom
     },
-    "obsidian_gold": {
-        "wall_color":   "\033[48;5;232m  \033[0m",  # Pure obsidian
-        "road_color":   "\033[48;5;233m  \033[0m",  # Charcoal black
-        "path_color":   "\033[48;5;94m  \033[0m",   # Dark amber stone
-        "entery_color": "\033[48;5;178m  \033[0m",  # Molten gold
-        "exit_color":   "\033[48;5;220m  \033[0m",  # Bright gold
-        "ft_pattern":   "\033[48;5;178m  \033[0m",  # Gold trail
+    "crimson_void": {
+        "wall_color":   "\033[48;5;16m  \033[0m",   # Deep void black-red
+        "road_color":   "\033[48;5;52m  \033[0m",   # Dark crimson shadow
+        "path_color":   "\033[48;5;51m  \033[0m",   # ★ Electric cyan — pops on all reds
+        "entery_color": "\033[48;5;160m  \033[0m",  # Deep crimson entry
+        "exit_color":   "\033[48;5;197m  \033[0m",  # Hot magenta-red exit
+        "ft_pattern":   "\033[48;5;160m  \033[0m",  # Crimson trail
     },
-    "aurora": {
-        "wall_color":   "\033[48;5;232m  \033[0m",  # Arctic midnight
-        "road_color":   "\033[48;5;17m  \033[0m",   # Deep night blue
-        "path_color":   "\033[48;5;22m  \033[0m",   # Dark tundra green
-        "entery_color": "\033[48;5;48m  \033[0m",   # Aurora green
-        "exit_color":   "\033[48;5;129m  \033[0m",  # Aurora violet
-        "ft_pattern":   "\033[48;5;48m  \033[0m",   # Green glow trail
+    "toxic_jungle": {
+        "wall_color":   "\033[48;5;232m  \033[0m",  # Pitch black
+        "road_color":   "\033[48;5;22m  \033[0m",   # Dark toxic green
+        "path_color":   "\033[48;5;201m  \033[0m",  # ★ Electric magenta — pops on all greens
+        "entery_color": "\033[48;5;46m  \033[0m",   # Radioactive green entry
+        "exit_color":   "\033[48;5;190m  \033[0m",  # Toxic lime exit
+        "ft_pattern":   "\033[48;5;46m  \033[0m",   # Neon green trail
     },
     "sandstorm": {
         "wall_color":   "\033[48;5;52m  \033[0m",   # Dark desert rock
@@ -53,7 +53,7 @@ theme_mapper = {
     "1": "ash_lava",
     "2": "deep_ocean",
     "3": "sakura",
-    "4": "obsidian_gold",
-    "5": "aurora",
+    "4": "crimson_void",
+    "5": "toxic_jungle",
     "6": "sandstorm",
 }

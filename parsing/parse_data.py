@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
-
 
 def open_file(filename: str):
 
@@ -43,8 +41,10 @@ def check_prop(dict_data: dict) -> dict:
     for key, val in dict_data.items():
 
         if key in ["width", "height"]:
-
-            data_parsed[key] = int(float(val))
+            try:
+                data_parsed[key] = int(float(val))
+            except Exception:
+                raise ValueError(f"you must enter a valid {key}")
 
             if data_parsed[key] <= 0:
                 raise ValueError
@@ -54,11 +54,10 @@ def check_prop(dict_data: dict) -> dict:
             cords = [int(x.strip()) for x in val.split(',')]
 
             if len(cords) != 2:
-                raise ValueError
+                raise ValueError(f"These is not a valid cords {tuple(cords)}")
 
             if cords[0] < 0 or cords[1] < 0:
                 raise ValueError(f"{key} coordinates cannot be negative.")
-                sys.exit(1)
 
             data_parsed[key] = tuple(cords)
 
