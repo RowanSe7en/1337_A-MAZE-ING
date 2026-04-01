@@ -1,4 +1,6 @@
-from algorithm.maze_generator import *
+from algorithm.maze_generator import MazeGenerator
+import random
+
 
 class MazeSolver:
 
@@ -8,7 +10,10 @@ class MazeSolver:
         self.height = height
         self.entry = entry
         self.exit_ = exit_
-        self.visited = [[False for _ in range(self.width)] for _ in range(self.height)]
+        self.visited = [
+            [False for _ in range(self.width)]
+            for _ in range(self.height)
+            ]
 
     def bfs_solve_maze(self, maze):
 
@@ -33,7 +38,12 @@ class MazeSolver:
                 ny = y + dy
                 nx = x + dx
 
-                if nx >= 0 and ny >= 0 and nx < self.width and ny < self.height:
+                if (
+                    nx >= 0
+                    and ny >= 0
+                    and nx < self.width
+                    and ny < self.height
+                ):
 
                     if not self.visited[ny][nx]:
 
@@ -61,7 +71,6 @@ class MazeSolver:
 
             neighbors = []
 
-
             if (y, x) == self.exit_:
                 break
 
@@ -70,7 +79,12 @@ class MazeSolver:
                 ny = y + dy
                 nx = x + dx
 
-                if nx >= 0 and ny >= 0 and nx < self.width and ny < self.height:
+                if (
+                    nx >= 0
+                    and ny >= 0
+                    and nx < self.width
+                    and ny < self.height
+                ):
 
                     if not self.visited[ny][nx]:
 
@@ -110,7 +124,12 @@ class MazeSolver:
 
             for row in maze:
 
-                output_maze.write("".join(f"{cell-1:X}" if cell == 16 else f"{cell:X}" for cell in row))
+                output_maze.write(
+                            "".join(
+                                f"{cell-1:X}" if cell == 16 else f"{cell:X}"
+                                for cell in row
+                            )
+                        )
                 output_maze.write("\n")
 
             en_y, en_x = self.entry

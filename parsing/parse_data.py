@@ -2,6 +2,7 @@
 
 import sys
 
+
 def open_file(filename: str):
 
     try:
@@ -23,14 +24,17 @@ def parse_data(file_data: list) -> dict:
 
         if not line or line.startswith("#"):
             continue
-        
+
         if "=" not in line:
-            raise ValueError(f"in line {line_num}: Invalid format '{line}'. Use KEY=VALUE")
+            raise ValueError(
+                f"in line {line_num}: Invalid format '{line}'. Use KEY=VALUE"
+                )
 
         parts = line.split("=", 1)
         data_dict[parts[0].strip().lower()] = parts[1].strip()
 
     return data_dict
+
 
 def check_prop(dict_data: dict) -> dict:
 
@@ -57,7 +61,7 @@ def check_prop(dict_data: dict) -> dict:
                 sys.exit(1)
 
             data_parsed[key] = tuple(cords)
-            
+
         elif key == "output_file":
 
             if not val.endswith(".txt"):
@@ -67,7 +71,7 @@ def check_prop(dict_data: dict) -> dict:
 
         elif key == "perfect":
 
-            if val.lower() not in ['true','false']:
+            if val.lower() not in ['true', 'false']:
                 raise ValueError
             data_parsed[key] = val.lower() == "true"
 
@@ -80,12 +84,12 @@ def check_prop(dict_data: dict) -> dict:
 
         elif key == "animation":
 
-            if val.lower() in ['true','false']:
+            if val.lower() in ['true', 'false']:
                 data_parsed[key] = val.lower() == "true"
 
         elif key == "solve":
 
-            if val.lower() in ['dfs','bfs']:
+            if val.lower() in ['dfs', 'bfs']:
                 data_parsed[key] = val.lower()
             else:
                 data_parsed[key] = "dfs"
@@ -112,6 +116,7 @@ def check_prop(dict_data: dict) -> dict:
 
     return data_parsed
 
+
 def check_all_available(data: dict):
 
     required = ["width", "height", "entry", "exit", "output_file", "perfect"]
@@ -126,10 +131,16 @@ def check_all_available(data: dict):
         raise ValueError("(entry == exit)")
 
     if data['width'] < 9 or data['height'] < 7:
-        raise ValueError("The maze is so tiny, try to enter wider dimensions in the 'config.txt' file")
+        raise ValueError(
+            "The maze is so tiny,"
+            " try to enter wider dimensions in the 'config.txt' file"
+            )
     elif data['width'] > 50 or data['height'] > 25:
-        raise ValueError("The maze is huge, try to enter tiner dimensions in the 'config.txt' file")
-         
+        raise ValueError(
+            "The maze is huge, "
+            "try to enter tiner dimensions in the 'config.txt' file"
+            )
+
     w, h = data["width"], data['height']
     en_x, en_y = data["entry"]
     ex_x, ex_y = data["exit"]
