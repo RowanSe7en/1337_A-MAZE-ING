@@ -1,7 +1,7 @@
-HEIGHT=17
-WIDTH=19
+HEIGHT=20
+WIDTH=50
 ENTRY=0,8
-EXIT=15,0
+EXIT=0,0
 OUTPUT_FILE=maze.txt
 PERFECT=False
 
@@ -10,7 +10,7 @@ PERFECT=False
 #solve algorithm 'DFS' or 'BFS'
 SOLVE=DFS
 
-ANIMATION=True
+ANIMATION=False
 
 # GENERATE_TIME better to be longer than 0.04
 GENERATE_TIME=0.04
