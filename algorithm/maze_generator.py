@@ -4,8 +4,6 @@ from algorithm.ascii_landing import ascii_landing
 import random
 import time
 
-ft_coords = []
-
 
 class MazeGenerator:
 
@@ -31,6 +29,7 @@ class MazeGenerator:
         self.entry = entry
         self.exit_ = exit_
         self.is_ft_printable = is_ft_printable
+        self.ft_coords = []
 
         self.maze = [
             [0xF for _ in range(self.width)]
@@ -53,26 +52,26 @@ class MazeGenerator:
             ft_y += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         for _ in range(2):
             ft_x += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         for _ in range(2):
             ft_y -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         ft_y += 2
         for _ in range(2):
             ft_y += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         # 2
         ft_x += 5
@@ -81,31 +80,31 @@ class MazeGenerator:
             ft_x -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         for _ in range(2):
             ft_y -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         for _ in range(2):
             ft_x += 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         for _ in range(2):
             ft_y -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
         for _ in range(2):
             ft_x -= 1
             self.visited[ft_y][ft_x] = True
             self.maze[ft_y][ft_x] += 1
-            ft_coords.append((ft_y, ft_x))
+            self.ft_coords.append((ft_y, ft_x))
 
     def maze_render(self):
 
@@ -123,7 +122,7 @@ class MazeGenerator:
                 if (
                     self.maze[y][x] & 1
                     or (
-                        (y, x) in ft_coords
+                        (y, x) in self.ft_coords
                         and self.maze[y - 1][x] != 16
                     )
                 ):
@@ -287,7 +286,7 @@ def generator_entery(width, height, seed, entry,
     if is_ft_printable:
         maze_gen.where_is_42()
 
-    for cord in ft_coords:
+    for cord in maze_gen.ft_coords:
         if cord == entry:
             ascii_landing()
             print(
@@ -308,4 +307,4 @@ def generator_entery(width, height, seed, entry,
     if not is_perfect:
         maze = maze_gen.generate_non_perfect_maze(generator_time)
 
-    return maze
+    return {"maze": maze, "ft_coords": maze_gen.ft_coords}

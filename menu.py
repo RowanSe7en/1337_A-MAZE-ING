@@ -1,3 +1,5 @@
+from parsing.parse_data import check_prop
+
 GOLD = "\033[1;33m"
 CYAN = "\033[1;36m"
 MAGENTA = "\033[1;35m"
@@ -30,7 +32,11 @@ def menu():
         f"{GOLD}     ║{RESET}"
     )
     print(
-        f"{GOLD}║{RESET}  {RED}4 -{RESET} 🚪 Quit                     "
+        f"{GOLD}║{RESET}  {GREEN}4 -{RESET} 🛠️ Change Config             "
+        f"{GOLD}     ║{RESET}"
+    )
+    print(
+        f"{GOLD}║{RESET}  {RED}5 -{RESET} 🚪 Quit                     "
         f"{GOLD}     ║{RESET}"
     )
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
@@ -79,3 +85,57 @@ def color_menu():
 
     theme_choice = input(f"{BOLD}{MAGENTA}Choose Theme: {RESET}")
     return theme_choice
+
+
+def change_config():
+    """Display config menu and change a configuration value."""
+    all_keys = [
+        "width", "height", "entry", "exit",
+        "seed", "perfect", "generate_time", "solve_time"
+    ]
+
+    print(f"\n{GOLD}╔═══════════════════════════════════════╗{RESET}")
+    print(
+        f"{GOLD}║{RESET}   {BOLD}{CYAN}⚙️  CHANGE CONFIGURATION  ⚙️{RESET} "
+        f"{GOLD}         ║{RESET}"
+    )
+    print(f"{GOLD}╠═══════════════════════════════════════╣{RESET}")
+
+    print(f"{GOLD}║{RESET}  {GREEN}1 - Width{RESET}  (ex: 30)          "
+          f"{GOLD}        ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}2 - Height{RESET} (ex: 15)         "
+          f"{GOLD}         ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}3 - Entry{RESET}  (ex: 0,0)        "
+          f"{GOLD}         ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}4 - Exit{RESET}   (ex: 29,14)      "
+          f"{GOLD}         ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}5 - Seed{RESET}   (ex: 42)         "
+          f"{GOLD}         ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}6 - Perfect Maze{RESET} (true/false)"
+          f"{GOLD}        ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}7 - Generate Time{RESET} (#.##)"
+          f"{GOLD}             ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}8 - Solve Time{RESET} (#.##) "
+          f"{GOLD}               ║{RESET}")
+    print(f"{GOLD}║{RESET}  {GREEN}9 - Perfect Maze{RESET} (true/false)"
+        f"{GOLD}        ║{RESET}")
+
+    print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
+
+    key_chois = input(f"{BOLD}{MAGENTA}Enter Choice: {RESET}")
+
+    if int(key_chois) < len(all_keys) + 1:
+        data_key = all_keys[int(key_chois) - 1]
+        val = input(
+            f"{BOLD}{CYAN}Enter New Value "
+            f"(check example above): {RESET}"
+        )
+        if val == "":
+            new_dict = {data_key: None}
+        if data_key == "generate_time" or data_key == "solve_time":
+            data["animation"] = True
+        new_dict = check_prop({data_key: val})
+    else:
+        raise ValueError("Oops! Invalid choice.")
+
+    return new_dict

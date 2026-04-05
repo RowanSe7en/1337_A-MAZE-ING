@@ -3,7 +3,7 @@
 from parsing.parse_data import check_prop, check_all_available
 from parsing.parse_data import open_file, parse_data
 from algorithm.ascii_landing import ascii_landing
-from menu import menu, color_menu
+from menu import menu, color_menu, change_config
 import algorithm
 import sys
 
@@ -32,7 +32,7 @@ def get_data():
     return require
 
 
-def renderer(is_solved, data, is_colored, maze, parents, theme_id=None):
+def renderer(is_solved, data, is_colored, maze, parents, ft_coords, theme_id=None):
     algorithm.MazeRenderer(
         data["width"],
         data["height"],
@@ -43,7 +43,8 @@ def renderer(is_solved, data, is_colored, maze, parents, theme_id=None):
         is_solved,
         is_colored,
         theme_id,
-        data["solve_time"]
+        data["solve_time"],
+        ft_coords
         )
 
 
@@ -68,7 +69,7 @@ def entery_point(data, is_ft_printable):
         data["exit"],
         data["output_file"],
         data.get("solve", None),
-        maze
+        maze["maze"]
         )
 
     return {"maze": maze, "parents": parents}
@@ -89,7 +90,6 @@ def main():
 
         input("Press ENTER key to start... ")
         maze_data = entery_point(data, is_ft_printable)
-
         while (True):
 
             try:
@@ -119,7 +119,7 @@ def main():
                     is_solved,
                     data,
                     is_colored,
-                    maze_data['maze'], maze_data['parents'])
+                    maze_data['maze']['maze'], maze_data['parents'], maze_data['maze']['ft_coords'])
 
             elif num == 3:
 
@@ -130,10 +130,26 @@ def main():
                     is_solved,
                     data,
                     is_colored,
-                    maze_data['maze'], maze_data['parents'], theme_id)
+                    maze_data['maze']['maze'], maze_data['parents'], maze_data['maze']['ft_coords'], theme_id)
                 is_colored = False
-
             elif num == 4:
+                
+                key_change = change_config()
+                
+                dict_key = list(key_change.keys())[0]
+                
+                data[dict_key] = key_change[dict_key]
+                
+                is_colored = False
+                is_solved = False
+                # print(dict_key)
+
+                if data['width'] < 9 or data['height'] < 7:
+                    maze_data = entery_point(data, False)
+                else:
+                    maze_data = entery_point(data, True)
+                    
+            elif num == 5:
                 break
 
             else:

@@ -44,37 +44,55 @@ def check_prop(dict_data: dict) -> dict:
             try:
                 data_parsed[key] = int(float(val))
             except Exception:
-                raise ValueError(f"Invalid value for '{key}': must be a positive integer.")
+                raise ValueError(
+                    f"Invalid value for '{key}': must be a positive integer."
+                    )
 
             if data_parsed[key] <= 0:
-                raise ValueError(f"Invalid value for '{key}': must be a positive integer.")
+                raise ValueError(
+                    f"Invalid value for '{key}': must be a positive integer."
+                    )
 
         elif key in ["entry", "exit"]:
-            
+
             try:
                 cords = [int(x.strip()) for x in val.split(',')]
             except ValueError:
-                raise ValueError(f"Invalid value for '{key}': the keys x and y are not integers.")
+                raise ValueError(
+                    f"Invalid value for '{key}': "
+                    "the keys x and y are not integers."
+                    )
 
             if len(cords) != 2:
-                raise ValueError(f"Invalid value for '{key}': must be in this format (<y>, <x>).")
+                raise ValueError(
+                    f"Invalid value for '{key}': "
+                    "must be in this format (<y>, <x>)."
+                    )
 
             if cords[0] < 0 or cords[1] < 0:
-                raise ValueError(f"Invalid value for '{key}': coordinates cannot be negative.")
+                raise ValueError(
+                    f"Invalid value for '{key}': "
+                    "coordinates cannot be negative."
+                    )
 
             data_parsed[key] = tuple(cords)
 
         elif key == "output_file":
 
             if not val.endswith(".txt"):
-                raise ValueError(f"Invalid value for '{key}': must end with '.txt'")
+                raise ValueError(
+                    f"Invalid value for '{key}': must end with '.txt'"
+                    )
 
             data_parsed[key] = val
 
         elif key == "perfect":
 
             if val.lower() not in ['true', 'false']:
-                raise ValueError(f"Invalid value for '{key}': must be 'true' or 'false'")
+                raise ValueError(
+                    f"Invalid value for '{key}': "
+                    "must be 'true' or 'false'"
+                    )
             data_parsed[key] = val.lower() == "true"
 
         elif key == "seed":

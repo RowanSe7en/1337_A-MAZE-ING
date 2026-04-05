@@ -1,11 +1,11 @@
 # ----------------------------------Mandatory Keys---------------------------------
 
 HEIGHT=15
-WIDTH=14
-ENTRY=3,0
-EXIT=0,0
+WIDTH=17
+ENTRY=0,0
+EXIT=14,16
 OUTPUT_FILE=output_maze.txt
-PERFECT=False
+PERFECT=True
 
 # ----------------------------------Optional SEED-----------------------------------
 
@@ -19,5 +19,5 @@ SOLVE=BFS
 
 # GENERATE_TIME better to be longer than 0.04
 ANIMATION=False
-GENERATE_TIME=0.04
+GENERATE_TIME=0.01
 SOLVE_TIME=0.02

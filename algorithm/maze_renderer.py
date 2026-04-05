@@ -47,9 +47,7 @@ def ascii_render(width, height, entry, exit_, maze, path_coords):
     print("+")
 
 
-def emoji_render(width, height, entry, exit_, maze, path_coords):
-
-    from algorithm.maze_generator import ft_coords
+def emoji_render(width, height, entry, exit_, maze, path_coords, ft_coords):
 
     for y in range(height):
 
@@ -138,7 +136,7 @@ previous_color = None
 
 
 def ansi_render(width, height, entry, exit_, maze,
-                path_coords, is_solved, is_colored, theme_id, parents):
+                path_coords, is_solved, is_colored, theme_id, parents, ft_coords):
 
     global is_changed
     global previous_color
@@ -179,8 +177,6 @@ def ansi_render(width, height, entry, exit_, maze,
     entery_color = theme['entery_color']
     exit_color = theme['exit_color']
     ft_pattern = theme['ft_pattern']
-
-    from algorithm.maze_generator import ft_coords
 
     for y in range(height):
 
@@ -266,7 +262,7 @@ def ansi_render(width, height, entry, exit_, maze,
 
 
 def MazeRenderer(width, height, entry, exit_, maze,
-                 parents, is_solved, is_colored, theme_id, solve_time):
+                 parents, is_solved, is_colored, theme_id, solve_time, ft_coords):
 
     path_coords = set()
     path_coords_list = []
@@ -284,7 +280,7 @@ def MazeRenderer(width, height, entry, exit_, maze,
     path_coords_list.reverse()
 
     # ascii_render(width, height, entry, exit_, maze, path_coords)
-    # emoji_render(width, height, entry, exit_, maze, path_coords, is_solved)
+    # emoji_render(width, height, entry, exit_, maze, path_coords, is_solved, ft_coords)
 
     if solve_time:
 
@@ -293,7 +289,7 @@ def MazeRenderer(width, height, entry, exit_, maze,
             clear()
             animated_path_coords.add(path_coords_list[i])
             ansi_render(width, height, entry, exit_, maze,
-                        animated_path_coords, is_solved, is_colored, theme_id, parents)
+                        animated_path_coords, is_solved, is_colored, theme_id, parents, ft_coords)
             if is_solved:
                 time.sleep(solve_time)
 
@@ -301,4 +297,4 @@ def MazeRenderer(width, height, entry, exit_, maze,
 
         clear()
         ansi_render(width, height, entry, exit_, maze,
-                    path_coords, is_solved, is_colored, theme_id, parents)
+                    path_coords, is_solved, is_colored, theme_id, parents, ft_coords)
