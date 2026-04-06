@@ -139,8 +139,9 @@ class MazeSolver:
             output_maze.write(f"\n{en_y},{en_x}\n")
             output_maze.write(f"{ex_y},{ex_x}\n")
             output_maze.write(path_str)
-        
+
         return dict(reversed(list(path_cords.items())))
+
 
 def solver_entery(width, height, entry, exit_, out_file, solve, maze):
 

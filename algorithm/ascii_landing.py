@@ -19,24 +19,56 @@ def ascii_landing():
 
     algorithm.clear()
 
-    print(f"""{Color.cyan}{Color.dim}
-    ╔══════════════════════════════════════════════════════════════════════════════════╗
-    ║                                                                                  ║
-    ║{Color.magenta}{Color.bold}      █████╗     ███╗   ███╗ █████╗ ███████╗███████╗    ██╗███╗   ██╗ ██████╗     {Color.cyan}{Color.dim}║
-    ║{Color.magenta}{Color.bold}     ██╔══██╗    ████╗ ████║██╔══██╗╚══███╔╝██╔════╝    ██║████╗  ██║██╔════╝     {Color.cyan}{Color.dim}║
-    ║{Color.magenta}{Color.bold}     ███████║    ██╔████╔██║███████║  ███╔╝ █████╗      ██║██╔██╗ ██║██║  ███╗    {Color.cyan}{Color.dim}║
-    ║{Color.magenta}{Color.bold}     ██╔══██║    ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝      ██║██║╚██╗██║██║   ██║    {Color.cyan}{Color.dim}║
-    ║{Color.magenta}{Color.bold}     ██║  ██║    ██║ ╚═╝ ██║██║  ██║███████╗███████╗    ██║██║ ╚████║╚██████╔╝    {Color.cyan}{Color.dim}║
-    ║{Color.magenta}{Color.bold}     ╚═╝  ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝╚═╝  ╚═══╝ ╚═════╝     {Color.cyan}{Color.dim}║
-    ║                                                                                  ║
-    ║{Color.yellow}{Color.bold}                           🧩  A - M A Z E - I N G  🧩                            {Color.cyan}{Color.dim}║
-    ║                                                                                  ║
-    ║{Color.white}                         Created by brouane / bmarbouh                            {Color.cyan}{Color.dim}║
-    ╠══════════════════════════════════════════════════════════════════════════════════╣
-    ║                                                                                  ║
-    ║{Color.green}   ● Generate perfect & imperfect mazes                                           {Color.cyan}{Color.dim}║
-    ║{Color.green}   ● Visualize solving algorithms                                                 {Color.cyan}{Color.dim}║
-    ║{Color.green}   ● Optional colored rendering                                                   {Color.cyan}{Color.dim}║
-    ║                                                                                  ║
-    ╚══════════════════════════════════════════════════════════════════════════════════╝
-    {Color.reset}""")
+    print(
+        f"{Color.cyan}{Color.dim}\n"
+        "    ╔══════════════════════════════════════════════════"
+        "══════════════════════════════╗\n"
+        "    ║                                                  "
+        "                                ║\n"
+        f"    ║{Color.magenta}{Color.bold}"
+        "      █████╗     ███╗   ███╗ █████╗ ███████╗███████╗"
+        f"    ██╗███╗   ██╗ ██████╗     {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.magenta}{Color.bold}"
+        "     ██╔══██╗    ████╗ ████║██╔══██╗╚══███╔╝██╔════╝"
+        f"    ██║████╗  ██║██╔════╝     {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.magenta}{Color.bold}"
+        "     ███████║    ██╔████╔██║███████║  ███╔╝ █████╗  "
+        f"    ██║██╔██╗ ██║██║  ███╗    {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.magenta}{Color.bold}"
+        "     ██╔══██║    ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝  "
+        f"    ██║██║╚██╗██║██║   ██║    {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.magenta}{Color.bold}"
+        "     ██║  ██║    ██║ ╚═╝ ██║██║  ██║███████╗███████╗"
+        f"    ██║██║ ╚████║╚██████╔╝    {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.magenta}{Color.bold}"
+        "     ╚═╝  ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝"
+        f"    ╚═╝╚═╝  ╚═══╝ ╚═════╝     {Color.cyan}{Color.dim}║\n"
+        "    ║                                                  "
+        "                                ║\n"
+        f"    ║{Color.yellow}{Color.bold}"
+        "                           🧩  A - M A Z E - I N G  🧩"
+        f"                            {Color.cyan}{Color.dim}║\n"
+        "    ║                                                  "
+        "                                ║\n"
+        f"    ║{Color.white}"
+        "                         Created by brouane / bmarbouh"
+        f"                            {Color.cyan}{Color.dim}║\n"
+        "    ╠══════════════════════════════════════════════════"
+        "══════════════════════════════╣\n"
+        "    ║                                                  "
+        "                                ║\n"
+        f"    ║{Color.green}"
+        "   ● Generate perfect & imperfect mazes               "
+        f"                            {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.green}"
+        "   ● Visualize solving algorithms                      "
+        f"                          {Color.cyan}{Color.dim}║\n"
+        f"    ║{Color.green}"
+        "   ● Optional colored rendering                        "
+        f"                          {Color.cyan}{Color.dim}║\n"
+        "    ║                                                  "
+        "                                ║\n"
+        "    ╚══════════════════════════════════════════════════"
+        "══════════════════════════════╝\n"
+        f"    {Color.reset}"
+    )

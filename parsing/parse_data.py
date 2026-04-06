@@ -34,7 +34,7 @@ def parse_data(file_data: list) -> dict:
     return data_dict
 
 
-def check_prop(dict_data: dict) -> dict:
+def check_prop(dict_data: dict, is_animated=False) -> dict:
 
     data_parsed = {}
 
@@ -128,7 +128,7 @@ def check_prop(dict_data: dict) -> dict:
             except Exception:
                 data_parsed[key] = -1
 
-    if not data_parsed.get("animation", False):
+    if not data_parsed.get("animation", False) and not is_animated:
 
         data_parsed["solve_time"] = 0
         data_parsed["generate_time"] = 0
@@ -140,8 +140,6 @@ def check_prop(dict_data: dict) -> dict:
 
         if float(data_parsed.get("generate_time", -1)) < 0:
             data_parsed["generate_time"] = 0.05
-            
-
 
     return data_parsed
 
@@ -158,7 +156,10 @@ def check_all_available(data: dict):
             raise ValueError(f"Missing mandatory key: {item}")
 
     if data["entry"] == data["exit"]:
-        raise ValueError(f"Invalid value for '{data['exit']}' and '{data['entry']}': entry and exit cannot be the same.")
+        raise ValueError(
+            f"Invalid value for '{data['exit']}'"
+            f" and '{data['entry']}': entry and exit cannot be the same."
+            )
 
     if data['width'] < 9 or data['height'] < 7:
         is_ft_printable = False
@@ -168,8 +169,12 @@ def check_all_available(data: dict):
     ex_x, ex_y = data["exit"]
 
     if not (0 <= en_y < w and 0 <= en_x < h):
-        raise ValueError(f"The entry {data['entry']} is outside the maze bounds.")
+        raise ValueError(
+            f"The entry {data['entry']} is outside the maze bounds."
+            )
     elif not (0 <= ex_y < w and 0 <= ex_x < h):
-        raise ValueError(f"The exit {data['exit']} is outside the maze bounds.")
+        raise ValueError(
+            f"The exit {data['exit']} is outside the maze bounds."
+            )
 
     return {"data": data, "is_ft_printable": is_ft_printable}

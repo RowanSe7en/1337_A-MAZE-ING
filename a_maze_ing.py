@@ -32,7 +32,10 @@ def get_data():
     return require
 
 
-def renderer(is_solved, data, is_colored, maze, parents, ft_coords, theme_id=None):
+def renderer(
+    is_solved, data, is_colored, maze,
+    parents, ft_coords, theme_id=None
+        ):
     algorithm.MazeRenderer(
         data["width"],
         data["height"],
@@ -119,7 +122,9 @@ def main():
                     is_solved,
                     data,
                     is_colored,
-                    maze_data['maze']['maze'], maze_data['parents'], maze_data['maze']['ft_coords'])
+                    maze_data['maze']['maze'],
+                    maze_data['parents'],
+                    maze_data['maze']['ft_coords'])
 
             elif num == 3:
 
@@ -130,25 +135,34 @@ def main():
                     is_solved,
                     data,
                     is_colored,
-                    maze_data['maze']['maze'], maze_data['parents'], maze_data['maze']['ft_coords'], theme_id)
+                    maze_data['maze']['maze'],
+                    maze_data['parents'],
+                    maze_data['maze']['ft_coords'],
+                    theme_id)
                 is_colored = False
             elif num == 4:
-                
+
                 key_change = change_config()
-                
+                # print(key_change)
+
                 dict_key = list(key_change.keys())[0]
-                
-                data[dict_key] = key_change[dict_key]
-                
+
+                if dict_key in ["generate_time", "solve_time"]:
+                    data["animation"] = True
+
+                new_dict = check_prop(key_change, True)
+                print(new_dict)
+                data[dict_key] = new_dict[dict_key]
+                # print(data[dict_key] , new_dict[dict_key])
+
                 is_colored = False
                 is_solved = False
-                # print(dict_key)
 
                 if data['width'] < 9 or data['height'] < 7:
                     maze_data = entery_point(data, False)
                 else:
                     maze_data = entery_point(data, True)
-                    
+
             elif num == 5:
                 break
 

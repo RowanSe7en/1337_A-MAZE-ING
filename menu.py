@@ -1,5 +1,3 @@
-from parsing.parse_data import check_prop
-
 GOLD = "\033[1;33m"
 CYAN = "\033[1;36m"
 MAGENTA = "\033[1;35m"
@@ -117,8 +115,10 @@ def change_config():
           f"{GOLD}             ║{RESET}")
     print(f"{GOLD}║{RESET}  {GREEN}8 - Solve Time{RESET} (#.##) "
           f"{GOLD}               ║{RESET}")
-    print(f"{GOLD}║{RESET}  {GREEN}9 - Perfect Maze{RESET} (true/false)"
-        f"{GOLD}        ║{RESET}")
+    print(
+        f"{GOLD}║{RESET}  {GREEN}9 - Perfect Maze{RESET} (true/false)"
+        f"{GOLD}        ║{RESET}"
+        )
 
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
 
@@ -132,9 +132,7 @@ def change_config():
         )
         if val == "":
             new_dict = {data_key: None}
-        if data_key == "generate_time" or data_key == "solve_time":
-            data["animation"] = True
-        new_dict = check_prop({data_key: val})
+        new_dict = {data_key: val}
     else:
         raise ValueError("Oops! Invalid choice.")
 

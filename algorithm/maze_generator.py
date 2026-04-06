@@ -21,7 +21,10 @@ class MazeGenerator:
         1 << 3: 1 << 1
     }
 
-    def __init__(self, width, height, seed, entry, exit_, is_ft_printable=True):
+    def __init__(
+        self, width, height, seed, entry,
+        exit_, is_ft_printable=True
+            ):
 
         self.width = width
         self.height = height
@@ -281,7 +284,10 @@ class MazeGenerator:
 def generator_entery(width, height, seed, entry,
                      exit_, is_perfect, generator_time, is_ft_printable):
 
-    maze_gen = MazeGenerator(width, height, seed, entry, exit_, is_ft_printable)
+    maze_gen = MazeGenerator(
+        width, height, seed,
+        entry, exit_, is_ft_printable
+            )
 
     if is_ft_printable:
         maze_gen.where_is_42()
