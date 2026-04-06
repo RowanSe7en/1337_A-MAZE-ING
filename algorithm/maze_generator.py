@@ -1,3 +1,4 @@
+from typing import List, Tuple, Dict, Optional
 from algorithm.theme_palette import themes
 from algorithm.clear import clear
 from algorithm.ascii_landing import ascii_landing
@@ -7,49 +8,53 @@ import time
 
 class MazeGenerator:
 
-    directions = [
-        (-1, 0, 1 << 0, "N"),  # North
-        (0, 1, 1 << 1, "E"),   # East
-        (1, 0, 1 << 2, "S"),   # South
-        (0, -1, 1 << 3, "W")   # West
+    directions: List[Tuple[int, int, int, str]] = [
+        (-1, 0, 1 << 0, "N"),
+        (0, 1, 1 << 1, "E"),
+        (1, 0, 1 << 2, "S"),
+        (0, -1, 1 << 3, "W"),
     ]
 
-    opposite = {
+    opposite: Dict[int, int] = {
         1 << 0: 1 << 2,
         1 << 1: 1 << 3,
         1 << 2: 1 << 0,
-        1 << 3: 1 << 1
+        1 << 3: 1 << 1,
     }
 
     def __init__(
-        self, width, height, seed, entry,
-        exit_, is_ft_printable=True
-            ):
+        self,
+        width: int,
+        height: int,
+        seed: Optional[int],
+        entry: Tuple[int, int],
+        exit_: Tuple[int, int],
+        is_ft_printable: bool = True,
+    ) -> None:
 
-        self.width = width
-        self.height = height
-        self.seed = seed
-        self.entry = entry
-        self.exit_ = exit_
-        self.is_ft_printable = is_ft_printable
-        self.ft_coords = []
+        self.width: int = width
+        self.height: int = height
+        self.seed: Optional[int] = seed
+        self.entry: Tuple[int, int] = entry
+        self.exit_: Tuple[int, int] = exit_
+        self.is_ft_printable: bool = is_ft_printable
+        self.ft_coords: List[Tuple[int, int]] = []
 
-        self.maze = [
+        self.maze: List[List[int]] = [
             [0xF for _ in range(self.width)]
             for _ in range(self.height)
-            ]
+        ]
 
-        self.visited = [
+        self.visited: List[List[bool]] = [
             [False for _ in range(self.width)]
             for _ in range(self.height)
-            ]
+        ]
 
-    def where_is_42(self):
+    def where_is_42(self) -> None:
 
         ft_y = int((self.height / 2) - 2.5)
         ft_x = int((self.width / 2) - 3.5)
 
-        # 4
         ft_y -= 1
         for _ in range(3):
             ft_y += 1
@@ -76,7 +81,6 @@ class MazeGenerator:
             self.maze[ft_y][ft_x] += 1
             self.ft_coords.append((ft_y, ft_x))
 
-        # 2
         ft_x += 5
 
         for _ in range(3):
@@ -109,14 +113,14 @@ class MazeGenerator:
             self.maze[ft_y][ft_x] += 1
             self.ft_coords.append((ft_y, ft_x))
 
-    def maze_render(self):
+    def maze_render(self) -> None:
 
-        theme = themes['ash_lava']
-        wall_color = theme['wall_color']
-        road_color = theme['road_color']
-        entery_color = theme['entery_color']
-        exit_color = theme['exit_color']
-        ft_pattern = theme['ft_pattern']
+        theme = themes["ash_lava"]
+        wall_color = theme["wall_color"]
+        road_color = theme["road_color"]
+        entery_color = theme["entery_color"]
+        exit_color = theme["exit_color"]
+        ft_pattern = theme["ft_pattern"]
 
         for y in range(self.height):
             print(wall_color, end="")
@@ -131,11 +135,7 @@ class MazeGenerator:
                 ):
                     print(wall_color + wall_color, end="")
                 else:
-                    if self.maze[y][x] == 16:
-                        left = ft_pattern
-                    else:
-                        left = road_color
-
+                    left = ft_pattern if self.maze[y][x] == 16 else road_color
                     print(left + wall_color, end="")
 
             print()
@@ -144,7 +144,10 @@ class MazeGenerator:
 
                 if self.maze[y][x] == 16 and self.maze[y][x - 1] == 16:
                     left = ft_pattern
-                elif self.maze[y][x] & (1 << 3) or self.maze[y][x] & (1 << 4):
+                elif (
+                    self.maze[y][x] & (1 << 3)
+                    or self.maze[y][x] & (1 << 4)
+                ):
                     left = wall_color
                 else:
                     left = road_color
@@ -160,11 +163,11 @@ class MazeGenerator:
 
                 print(left + content, end="")
 
-            right = right = (
-                        wall_color
-                        if self.maze[y][self.width - 1] & (1 << 1)
-                        else ""
-                    )
+            right = (
+                wall_color
+                if self.maze[y][self.width - 1] & (1 << 1)
+                else ""
+            )
             print(right)
 
         for x in range(self.width):
@@ -174,23 +177,24 @@ class MazeGenerator:
                 print(road_color + road_color, end="")
         print(wall_color)
 
-    def generate_perfect_maze(self, generator_time, is_perfect):
+    def generate_perfect_maze(
+        self,
+        generator_time: float,
+        is_perfect: bool,
+    ) -> List[List[int]]:
 
         if self.seed is not None:
             random.seed(self.seed)
 
         y, x = 0, 0
         self.visited[y][x] = True
-        stack = [(y, x)]
+        stack: List[Tuple[int, int]] = [(y, x)]
 
         while stack:
-
             y, x = stack[-1]
-
-            neighbors = []
+            neighbors: List[Tuple[int, int, int, str]] = []
 
             for dy, dx, wall, dire in MazeGenerator.directions:
-
                 ny = y + dy
                 nx = x + dx
 
@@ -199,7 +203,6 @@ class MazeGenerator:
                         neighbors.append((ny, nx, wall, dire))
 
             if neighbors:
-
                 ny, nx, wall, dire = random.choice(neighbors)
 
                 self.maze[y][x] &= ~wall
@@ -212,7 +215,6 @@ class MazeGenerator:
                     clear(self.is_ft_printable)
                     self.maze_render()
                     time.sleep(generator_time)
-
             else:
                 stack.pop()
 
@@ -222,28 +224,29 @@ class MazeGenerator:
 
         return self.maze
 
-    def generate_non_perfect_maze(self, generator_time):
+    def generate_non_perfect_maze(
+        self,
+        generator_time: float,
+    ) -> List[List[int]]:
 
         if self.seed is not None:
             random.seed(self.seed + 1)
 
         y, x = self.exit_
         randomizer = [False, True]
-        non_perfect_visited = [
+        non_perfect_visited: List[List[bool]] = [
             [False for _ in range(self.width)]
             for _ in range(self.height)
-            ]
+        ]
+
         non_perfect_visited[y][x] = True
-        stack = [(y, x)]
+        stack: List[Tuple[int, int]] = [(y, x)]
 
         while stack:
-
             y, x = stack[-1]
-
-            neighbors = []
+            neighbors: List[Tuple[int, int, int, str]] = []
 
             for dy, dx, wall, dire in MazeGenerator.directions:
-
                 ny = y + dy
                 nx = x + dx
 
@@ -257,7 +260,6 @@ class MazeGenerator:
                         neighbors.append((ny, nx, wall, dire))
 
             if neighbors:
-
                 ny, nx, wall, dire = random.choice(neighbors)
 
                 self.maze[y][x] &= ~wall
@@ -270,7 +272,6 @@ class MazeGenerator:
                     clear(self.is_ft_printable)
                     self.maze_render()
                     time.sleep(generator_time)
-
             else:
                 stack.pop()
 
@@ -281,13 +282,25 @@ class MazeGenerator:
         return self.maze
 
 
-def generator_entery(width, height, seed, entry,
-                     exit_, is_perfect, generator_time, is_ft_printable):
+def generator_entery(
+    width: int,
+    height: int,
+    seed: Optional[int],
+    entry: Tuple[int, int],
+    exit_: Tuple[int, int],
+    is_perfect: bool,
+    generator_time: float,
+    is_ft_printable: bool,
+) -> Dict[str, List]:
 
     maze_gen = MazeGenerator(
-        width, height, seed,
-        entry, exit_, is_ft_printable
-            )
+        width,
+        height,
+        seed,
+        entry,
+        exit_,
+        is_ft_printable,
+    )
 
     if is_ft_printable:
         maze_gen.where_is_42()
@@ -296,16 +309,16 @@ def generator_entery(width, height, seed, entry,
         if cord == entry:
             ascii_landing()
             print(
-                "The entery is placed inside of the 42 pattern,"
-                " please enter another cords"
-                )
+                "The entery is placed inside of the 42 pattern, "
+                "please enter another cords"
+            )
             exit(1)
         elif cord == exit_:
             ascii_landing()
             print(
-                "The exit is placed inside of the 42 pattern,"
-                " please enter another cords"
-                )
+                "The exit is placed inside of the 42 pattern, "
+                "please enter another cords"
+            )
             exit(1)
 
     maze = maze_gen.generate_perfect_maze(generator_time, is_perfect)

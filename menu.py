@@ -1,3 +1,5 @@
+from typing import Dict, Optional
+
 GOLD = "\033[1;33m"
 CYAN = "\033[1;36m"
 MAGENTA = "\033[1;35m"
@@ -7,7 +9,7 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 
 
-def menu():
+def menu() -> str:
 
     """Display the main menu and get user's choice."""
     print(f"\n{GOLD}╔═══════════════════════════════════════╗{RESET}")
@@ -39,11 +41,11 @@ def menu():
     )
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
 
-    choice = input(f"{BOLD}{MAGENTA}Choice? (1-4): {RESET}")
+    choice: str = input(f"{BOLD}{MAGENTA}Choice? (1-4): {RESET}")
     return choice
 
 
-def color_menu():
+def color_menu() -> str:
     """Display the theme menu and get user's theme choice."""
     print(f"\n{GOLD}╔═══════════════════════════════════════╗{RESET}")
     print(
@@ -81,11 +83,11 @@ def color_menu():
     )
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
 
-    theme_choice = input(f"{BOLD}{MAGENTA}Choose Theme: {RESET}")
+    theme_choice: str = input(f"{BOLD}{MAGENTA}Choose Theme: {RESET}")
     return theme_choice
 
 
-def change_config():
+def change_config() -> Dict[str, Optional[str]]:
     """Display config menu and change a configuration value."""
     all_keys = [
         "width", "height", "entry", "exit",
@@ -122,16 +124,18 @@ def change_config():
 
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
 
-    key_chois = input(f"{BOLD}{MAGENTA}Enter Choice: {RESET}")
+    key_chois: str = input(f"{BOLD}{MAGENTA}Enter Choice: {RESET}")
 
     if int(key_chois) < len(all_keys) + 1:
-        data_key = all_keys[int(key_chois) - 1]
-        val = input(
+        data_key: str = all_keys[int(key_chois) - 1]
+        val: str = input(
             f"{BOLD}{CYAN}Enter New Value "
             f"(check example above): {RESET}"
         )
         if val == "":
-            new_dict = {data_key: None}
+            new_dict: Dict[str, Optional[str]] = {data_key: None}
+            return new_dict
+
         new_dict = {data_key: val}
     else:
         raise ValueError("Oops! Invalid choice.")

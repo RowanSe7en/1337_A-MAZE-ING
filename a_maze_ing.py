@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+from typing import Any, Dict, Optional, Union
 from parsing.parse_data import check_prop, check_all_available
 from parsing.parse_data import open_file, parse_data
 from algorithm.ascii_landing import ascii_landing
@@ -8,7 +8,7 @@ import algorithm
 import sys
 
 
-def get_data():
+def get_data() -> Dict[str, Any]:
 
     if len(sys.argv) != 2:
         print("Error: must Entre valid args 'a_maze_ing.py config.txt'")
@@ -27,15 +27,20 @@ def get_data():
     if require["data"]["output_file"] == sys.argv[1]:
         raise ValueError(
             "The output file cannot be the same name as the config file "
-            )
+        )
 
     return require
 
 
 def renderer(
-    is_solved, data, is_colored, maze,
-    parents, ft_coords, theme_id=None
-        ):
+    is_solved: bool,
+    data: Dict[str, Any],
+    is_colored: bool,
+    maze: Any,
+    parents: Any,
+    ft_coords: Any,
+    theme_id: Optional[int] = None
+) -> None:
     algorithm.MazeRenderer(
         data["width"],
         data["height"],
@@ -48,10 +53,11 @@ def renderer(
         theme_id,
         data["solve_time"],
         ft_coords
-        )
+    )
 
 
-def entery_point(data, is_ft_printable):
+def entery_point(data: Dict[str, Any],
+                 is_ft_printable: bool) -> Dict[str, Any]:
 
     algorithm.clear()
 
@@ -64,7 +70,7 @@ def entery_point(data, is_ft_printable):
         data["perfect"],
         data["generate_time"],
         is_ft_printable
-        )
+    )
     parents = algorithm.solver_entery(
         data["width"],
         data["height"],
@@ -73,12 +79,12 @@ def entery_point(data, is_ft_printable):
         data["output_file"],
         data.get("solve", None),
         maze["maze"]
-        )
+    )
 
     return {"maze": maze, "parents": parents}
 
 
-def main():
+def main() -> None:
 
     ascii_landing()
 
@@ -93,10 +99,10 @@ def main():
 
         input("Press ENTER key to start... ")
         maze_data = entery_point(data, is_ft_printable)
-        while (True):
+        while True:
 
             try:
-                num = menu()
+                num: Union[int, str] = menu()
 
                 if num == "":
                     print("YOU LEFT THE MAZE, SEE YOU LATER ALLIGATOR")
@@ -124,7 +130,8 @@ def main():
                     is_colored,
                     maze_data['maze']['maze'],
                     maze_data['parents'],
-                    maze_data['maze']['ft_coords'])
+                    maze_data['maze']['ft_coords']
+                )
 
             elif num == 3:
 
@@ -138,13 +145,12 @@ def main():
                     maze_data['maze']['maze'],
                     maze_data['parents'],
                     maze_data['maze']['ft_coords'],
-                    theme_id)
+                    theme_id
+                )
                 is_colored = False
             elif num == 4:
 
-                key_change = change_config()
-                # print(key_change)
-
+                key_change: Dict[str, Any] = change_config()
                 dict_key = list(key_change.keys())[0]
 
                 if dict_key in ["generate_time", "solve_time"]:
@@ -153,7 +159,6 @@ def main():
                 new_dict = check_prop(key_change, True)
                 print(new_dict)
                 data[dict_key] = new_dict[dict_key]
-                # print(data[dict_key] , new_dict[dict_key])
 
                 is_colored = False
                 is_solved = False

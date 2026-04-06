@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+from typing import List, Dict, Any
 
 
-def open_file(filename: str):
+def open_file(filename: str) -> List[str]:
 
     try:
         with open(filename, "r") as f:
@@ -12,9 +13,9 @@ def open_file(filename: str):
         raise ValueError(f"File '{filename}' not found.")
 
 
-def parse_data(file_data: list) -> dict:
+def parse_data(file_data: List[str]) -> Dict[str, str]:
 
-    data_dict = {}
+    data_dict: Dict[str, str] = {}
 
     for line_num, item in enumerate(file_data, 1):
 
@@ -26,7 +27,7 @@ def parse_data(file_data: list) -> dict:
         if "=" not in line:
             raise ValueError(
                 f"in line {line_num}: Invalid format '{line}'. Use KEY=VALUE"
-                )
+            )
 
         parts = line.split("=", 1)
         data_dict[parts[0].strip().lower()] = parts[1].strip()
@@ -34,9 +35,10 @@ def parse_data(file_data: list) -> dict:
     return data_dict
 
 
-def check_prop(dict_data: dict, is_animated=False) -> dict:
+def check_prop(dict_data: Dict[str, str],
+               is_animated: bool = False) -> Dict[str, Any]:
 
-    data_parsed = {}
+    data_parsed: Dict[str, Any] = {}
 
     for key, val in dict_data.items():
 
@@ -46,12 +48,12 @@ def check_prop(dict_data: dict, is_animated=False) -> dict:
             except Exception:
                 raise ValueError(
                     f"Invalid value for '{key}': must be a positive integer."
-                    )
+                )
 
             if data_parsed[key] <= 0:
                 raise ValueError(
                     f"Invalid value for '{key}': must be a positive integer."
-                    )
+                )
 
         elif key in ["entry", "exit"]:
 
@@ -59,21 +61,21 @@ def check_prop(dict_data: dict, is_animated=False) -> dict:
                 cords = [int(x.strip()) for x in val.split(',')]
             except ValueError:
                 raise ValueError(
-                    f"Invalid value for '{key}': "
-                    "the keys x and y are not integers."
-                    )
+                    f"Invalid value for '{key}'"
+                    ": the keys x and y are not integers."
+                )
 
             if len(cords) != 2:
                 raise ValueError(
-                    f"Invalid value for '{key}': "
-                    "must be in this format (<y>, <x>)."
-                    )
+                    f"Invalid value for '{key}'"
+                    ": must be in this format (<y>, <x>)."
+                )
 
             if cords[0] < 0 or cords[1] < 0:
                 raise ValueError(
-                    f"Invalid value for '{key}': "
-                    "coordinates cannot be negative."
-                    )
+                    f"Invalid value for '{key}'"
+                    ": coordinates cannot be negative."
+                )
 
             data_parsed[key] = tuple(cords)
 
@@ -82,7 +84,7 @@ def check_prop(dict_data: dict, is_animated=False) -> dict:
             if not val.endswith(".txt"):
                 raise ValueError(
                     f"Invalid value for '{key}': must end with '.txt'"
-                    )
+                )
 
             data_parsed[key] = val
 
@@ -90,9 +92,8 @@ def check_prop(dict_data: dict, is_animated=False) -> dict:
 
             if val.lower() not in ['true', 'false']:
                 raise ValueError(
-                    f"Invalid value for '{key}': "
-                    "must be 'true' or 'false'"
-                    )
+                    f"Invalid value for '{key}': must be 'true' or 'false'"
+                )
             data_parsed[key] = val.lower() == "true"
 
         elif key == "seed":
@@ -144,7 +145,7 @@ def check_prop(dict_data: dict, is_animated=False) -> dict:
     return data_parsed
 
 
-def check_all_available(data: dict):
+def check_all_available(data: Dict[str, Any]) -> Dict[str, Any]:
 
     required = ["width", "height", "entry", "exit", "output_file", "perfect"]
     missing = [k for k in required if k not in data]
@@ -159,7 +160,7 @@ def check_all_available(data: dict):
         raise ValueError(
             f"Invalid value for '{data['exit']}'"
             f" and '{data['entry']}': entry and exit cannot be the same."
-            )
+        )
 
     if data['width'] < 9 or data['height'] < 7:
         is_ft_printable = False
@@ -171,10 +172,10 @@ def check_all_available(data: dict):
     if not (0 <= en_y < w and 0 <= en_x < h):
         raise ValueError(
             f"The entry {data['entry']} is outside the maze bounds."
-            )
+        )
     elif not (0 <= ex_y < w and 0 <= ex_x < h):
         raise ValueError(
             f"The exit {data['exit']} is outside the maze bounds."
-            )
+        )
 
     return {"data": data, "is_ft_printable": is_ft_printable}

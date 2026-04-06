@@ -1,4 +1,6 @@
-themes = {
+from typing import Dict
+
+themes: Dict[str, Dict[str, str]] = {
     "ash_lava": {  # Original — unchanged
         "wall_color": "\033[40m  \033[0m",
         "road_color": "\033[100m  \033[0m",
@@ -49,7 +51,7 @@ themes = {
     },
 }
 
-theme_mapper = {
+theme_mapper: Dict[str, str] = {
     "1": "ash_lava",
     "2": "deep_ocean",
     "3": "sakura",

@@ -1,10 +1,15 @@
+from typing import List, Tuple, Set, Dict, Optional
 from algorithm.theme_palette import themes, theme_mapper
 from algorithm.clear import clear
 import random
 import time
 
 
-def ascii_render(width, height, entry, exit_, maze, path_coords):
+def ascii_render(width: int, height: int,
+                 entry: Tuple[int, int],
+                 exit_: Tuple[int, int],
+                 maze: List[List[int]],
+                 path_coords: Set[Tuple[int, int]]) -> None:
 
     for y in range(height):
 
@@ -47,7 +52,12 @@ def ascii_render(width, height, entry, exit_, maze, path_coords):
     print("+")
 
 
-def emoji_render(width, height, entry, exit_, maze, path_coords, ft_coords):
+def emoji_render(width: int, height: int,
+                 entry: Tuple[int, int],
+                 exit_: Tuple[int, int],
+                 maze: List[List[int]],
+                 path_coords: Set[Tuple[int, int]],
+                 ft_coords: Set[Tuple[int, int]]) -> None:
 
     for y in range(height):
 
@@ -124,21 +134,24 @@ def emoji_render(width, height, entry, exit_, maze, path_coords, ft_coords):
     print("⬛")
 
 
-def printer(what_to_print, is_end):
+def printer(what_to_print: str, is_end: bool) -> None:
     if is_end:
         print(what_to_print, end="")
     else:
         print(what_to_print)
 
 
-is_changed = False
-previous_color = None
+is_changed: bool = False
+previous_color: Optional[Dict[str, str]] = None
 
 
-def ansi_render(width, height, entry, exit_, maze,
-                path_coords, is_solved, is_colored,
-                theme_id, parents, ft_coords
-                ):
+def ansi_render(width: int, height: int,
+                entry: Tuple[int, int], exit_: Tuple[int, int],
+                maze: List[List[int]],
+                path_coords: Set[Tuple[int, int]], is_solved: bool,
+                is_colored: bool, theme_id: str,
+                parents: Dict[Tuple[int, int], Tuple[int, int, int]],
+                ft_coords: Set[Tuple[int, int]]) -> None:
 
     global is_changed
     global previous_color
@@ -289,12 +302,16 @@ def ansi_render(width, height, entry, exit_, maze,
     printer(wall_color, 0)
 
 
-def MazeRenderer(width, height, entry, exit_, maze,
-                 parents, is_solved, is_colored, theme_id,
-                 solve_time, ft_coords):
+def MazeRenderer(width: int, height: int,
+                 entry: Tuple[int, int], exit_: Tuple[int, int],
+                 maze: List[List[int]],
+                 parents: Dict[Tuple[int, int], Tuple[int, int, int]],
+                 is_solved: bool, is_colored: bool, theme_id: str,
+                 solve_time: Optional[float],
+                 ft_coords: Set[Tuple[int, int]]) -> None:
 
-    path_coords = set()
-    path_coords_list = []
+    path_coords: Set[Tuple[int, int]] = set()
+    path_coords_list: List[Tuple[int, int]] = []
     cur = exit_
 
     while cur in parents:
@@ -308,14 +325,9 @@ def MazeRenderer(width, height, entry, exit_, maze,
     path_coords.add(entry)
     path_coords_list.reverse()
 
-    # ascii_render(width, height, entry,
-    # exit_, maze, path_coords)
-    # emoji_render(width, height, entry, exit_,
-    # maze, path_coords, is_solved, ft_coords)
-
     if solve_time:
 
-        animated_path_coords = set()
+        animated_path_coords: Set[Tuple[int, int]] = set()
         for i in range(len(path_coords_list)):
             clear()
             animated_path_coords.add(path_coords_list[i])
