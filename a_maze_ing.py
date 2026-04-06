@@ -164,6 +164,7 @@ def main():
                     maze_data = entery_point(data, True)
 
             elif num == 5:
+                print("\nYOU LEFT THE MAZE, SEE YOU LATER ALLIGATOR")
                 break
 
             else:
