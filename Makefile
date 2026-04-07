@@ -17,12 +17,11 @@ clean:
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -f  output_maze.txt
-	rm -rf algorithm/__pycache__
 	rm -rf parsing/__pycache__
-
+	rm -rf algorithm/__pycache__
 
 lint:
-# 	python3 -m flake8 . --exclude=$(VENV_NAME)
+	python3 -m flake8 . --exclude=$(VENV_NAME)
 	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs --explicit-package-bases
 
 lint-strict:

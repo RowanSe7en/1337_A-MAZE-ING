@@ -10,6 +10,7 @@ BOLD = "\033[1m"
 BLUE = "\033[1;34m"
 YELLOW = "\033[1;33m"
 
+
 def menu() -> str:
 
     """Display the main menu and get user's choice."""
@@ -140,7 +141,7 @@ def change_config() -> Dict[str, Optional[str]]:
     print(f"{GOLD}╚═══════════════════════════════════════╝{RESET}")
 
     key_chois: str = input(f"{BOLD}{MAGENTA}Enter Choice: {RESET}")
-    new_dict = {}
+    new_dict: Dict[str, Optional[str]] = {}
 
     try:
 
@@ -152,7 +153,7 @@ def change_config() -> Dict[str, Optional[str]]:
             )
             while val == "":
                 print("Invalid choice, choose again.")
-                val: str = input(
+                val = input(
                     f"{BOLD}{CYAN}Enter New Value "
                     f"(check example above): {RESET}"
                 )

@@ -169,12 +169,14 @@ def ansi_render(width: int, height: int,
 
         else:
 
-            theme_mapper_id = theme_mapper.get(theme_id, None)
+            theme_mapper_id = theme_mapper.get(theme_id)
+
+            if theme_mapper_id is None:
+                theme_mapper_id = 'ash_lava'  # fallback for mypy safety
 
             theme = themes[theme_mapper_id]
             previous_color = theme
             is_changed = True
-
 
     elif not is_colored and is_changed:
         theme = previous_color

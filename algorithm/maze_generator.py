@@ -1,7 +1,6 @@
 from algorithm.theme_palette import themes, theme_mapper
 from algorithm.ascii_landing import ascii_landing
 from typing import List, Tuple, Dict, Optional
-from algorithm.theme_palette import themes
 from algorithm.clear import clear
 from typing import TypedDict
 import random
@@ -123,12 +122,19 @@ class MazeGenerator:
 
     def maze_render(self, theme_id: Optional[str] = None) -> None:
 
-        theme_mapper_id = theme_mapper.get(theme_id, None)
+        if theme_id is None:
+            theme_id = '1'   # or your default theme id
+
+        theme_mapper_id = theme_mapper.get(theme_id)
+
+        if theme_mapper_id is None:
+            theme_mapper_id = 'ash_lava'  # fallback only for typing safety
+
         theme = themes[theme_mapper_id]
 
         wall_color = theme['wall_color']
         road_color = theme['road_color']
-        path_color = theme['path_color']
+        # path_color = theme['path_color']
         entery_color = theme['entery_color']
         exit_color = theme['exit_color']
         ft_pattern = theme['ft_pattern']
@@ -230,7 +236,7 @@ class MazeGenerator:
             else:
                 stack.pop()
 
-        if not generator_time and not is_perfect:
+        if not generator_time and is_perfect:
             clear(self.is_ft_printable)
             self.maze_render(theme_id)
 

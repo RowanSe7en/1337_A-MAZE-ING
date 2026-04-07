@@ -87,7 +87,9 @@ def entery_point(data: Dict[str, Any],
 
     return {"maze": maze, "parents": parents}
 
+
 theme_id = "1"
+
 
 def main() -> None:
 
@@ -185,13 +187,13 @@ def main() -> None:
                     else:
 
                         renderer(
-                        is_solved,
-                        data,
-                        is_colored,
-                        maze_data['maze']['maze'],
-                        maze_data['parents'],
-                        maze_data['maze']['ft_coords']
-                    )
+                            is_solved,
+                            data,
+                            is_colored,
+                            maze_data['maze']['maze'],
+                            maze_data['parents'],
+                            maze_data['maze']['ft_coords']
+                            )
 
             elif num == 5:
                 print("\nYOU LEFT THE MAZE, SEE YOU LATER ALLIGATOR")
