@@ -10,7 +10,13 @@ def ascii_render(width: int, height: int,
                  exit_: Tuple[int, int],
                  maze: List[List[int]],
                  path_coords: Set[Tuple[int, int]]) -> None:
+    """
+    Render the maze using classic ASCII characters.
 
+    Displays walls, paths, entry, exit, and the solved path using simple
+    terminal characters. This renderer is intended for minimal terminals
+    without color or emoji support.
+    """
     for y in range(height):
 
         for x in range(width):
@@ -58,7 +64,12 @@ def emoji_render(width: int, height: int,
                  maze: List[List[int]],
                  path_coords: Set[Tuple[int, int]],
                  ft_coords: Set[Tuple[int, int]]) -> None:
+    """
+    Render the maze using emoji characters.
 
+    Provides a visually rich maze representation using colored emoji
+    blocks to represent walls, paths, entry, exit, and the 42 pattern.
+    """
     for y in range(height):
 
         print("⬛", end="")
@@ -135,6 +146,13 @@ def emoji_render(width: int, height: int,
 
 
 def printer(what_to_print: str, is_end: bool) -> None:
+    """
+    Helper function used by the ANSI renderer to control line endings.
+
+    Args:
+        what_to_print: The string to print.
+        is_end: If True, prints without newline. Otherwise prints newline.
+    """
     if is_end:
         print(what_to_print, end="")
     else:
@@ -152,6 +170,13 @@ def ansi_render(width: int, height: int,
                 is_colored: bool, theme_id: str,
                 parents: Dict[Tuple[int, int], Tuple[int, int, int]],
                 ft_coords: Set[Tuple[int, int]]) -> None:
+    """
+    Render the maze using ANSI color themes.
+
+    Supports dynamic themes, animated solving visualization,
+    and rendering of the 42 pattern. This is the main renderer used
+    by the application.
+    """
 
     global is_changed
     global previous_color
@@ -307,6 +332,13 @@ def MazeRenderer(width: int, height: int,
                  is_solved: bool, is_colored: bool, theme_id: str,
                  solve_time: Optional[float],
                  ft_coords: Set[Tuple[int, int]]) -> None:
+    """
+    High-level renderer responsible for displaying the maze and solution.
+
+    Reconstructs the solution path using the parents dictionary and
+    optionally animates the solving process depending on the configured
+    solve_time value.
+    """
 
     path_coords: Set[Tuple[int, int]] = set()
     path_coords_list: List[Tuple[int, int]] = []

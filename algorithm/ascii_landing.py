@@ -2,6 +2,15 @@ import algorithm
 
 
 class Color:
+    """
+    Utility class containing ANSI escape
+    codes for terminal text styling.
+
+    Provides constants for text formatting
+    (bold, dim) and common foreground
+    colors used to render the ASCII landing
+    banner and other CLI elements.
+    """
     reset: str = "\033[0m"
     bold: str = "\033[1m"
     dim: str = "\033[2m"

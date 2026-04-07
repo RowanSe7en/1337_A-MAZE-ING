@@ -18,6 +18,7 @@ clean:
 	rm -rf .pytest_cache
 	rm -f  output_maze.txt
 	rm -rf parsing/__pycache__
+	rm -rf mazegen/__pycache__
 	rm -rf algorithm/__pycache__
 
 lint:

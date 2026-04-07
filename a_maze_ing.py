@@ -6,10 +6,31 @@ from algorithm.ascii_landing import ascii_landing
 from menu import menu, color_menu, change_config
 import algorithm
 import sys
+from generator_entery import generator_entery
 
 
 def get_data() -> Dict[str, Any]:
+    """
+    Load, parse, and validate the configuration
+    file provided as a CLI argument.
 
+    This function ensures the program is
+    executed with a valid configuration file,
+    parses its content, validates the
+    configuration properties, and checks for
+    mandatory parameters.
+
+    Returns:
+        A dictionary containing:
+            - "data": validated configuration values.
+            - "is_ft_printable": boolean indicating if
+            the maze can display the "42" pattern.
+
+    Raises:
+        ValueError: If the output file has
+        the same name as the configuration file.
+        SystemExit: If the CLI arguments are invalid.
+    """
     if len(sys.argv) != 2:
         print("Error: must Entre valid args 'a_maze_ing.py config.txt'")
         sys.exit(0)
@@ -41,6 +62,18 @@ def renderer(
     ft_coords: Any,
     theme_id: Optional[str] = None
 ) -> None:
+    """
+    Render the maze using the MazeRenderer from the algorithm module.
+
+    Args:
+        is_solved: Whether the solution path should be displayed.
+        data: Configuration dictionary containing maze parameters.
+        is_colored: Whether colored rendering is enabled.
+        maze: Generated maze structure.
+        parents: Parent mapping used for solution path reconstruction.
+        ft_coords: Coordinates used for rendering the "42" pattern.
+        theme_id: Optional theme identifier for wall colors.
+    """
     algorithm.MazeRenderer(
         data["width"],
         data["height"],
@@ -59,10 +92,25 @@ def renderer(
 def entery_point(data: Dict[str, Any],
                  is_ft_printable: bool,
                  theme_id: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Generate a maze and compute its solution.
 
+    This function clears the screen, generates a new maze, and runs the solver
+    algorithm to compute the shortest path between entry and exit.
+
+    Args:
+        data: Validated configuration dictionary.
+        is_ft_printable: Indicates if the
+        maze is large enough to include the "42" pattern.
+        theme_id: Optional theme identifier for rendering.
+
+    Returns:
+        A dictionary containing:
+            - "maze": Generated maze data and metadata.
+            - "parents": Parent mapping representing the solution path.
+    """
     algorithm.clear()
-
-    maze = algorithm.generator_entery(
+    maze = generator_entery(
         data["width"],
         data["height"],
         data.get("seed", None),
@@ -92,7 +140,16 @@ theme_id = "1"
 
 
 def main() -> None:
+    """
+    Entry point of the application.
 
+    Handles the full program lifecycle:
+    - Displays the landing screen.
+    - Loads configuration.
+    - Generates the maze and runs the solver.
+    - Provides an interactive menu for regenerating mazes, toggling solutions,
+      changing colors, and updating configuration parameters.
+    """
     global theme_id
 
     ascii_landing()

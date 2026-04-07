@@ -1,20 +1,18 @@
 from algorithm.theme_palette import themes, theme_mapper
-from algorithm.ascii_landing import ascii_landing
 from typing import List, Tuple, Dict, Optional
 from algorithm.clear import clear
-from typing import TypedDict
 import random
 import time
 
 
-class MazeData(TypedDict):
-
-    maze: List[List[int]]
-    ft_coords: List[Tuple[int, int]]
-
-
 class MazeGenerator:
+    """
+    Maze generation class supporting perfect and non-perfect mazes.
 
+    Each cell in the maze uses a bitmask to represent walls in the four
+    cardinal directions (N, E, S, W). The class allows real-time rendering
+    with a theme and can optionally seed randomness for reproducible mazes.
+    """
     directions: List[Tuple[int, int, int, str]] = [
         (-1, 0, 1 << 0, "N"),
         (0, 1, 1 << 1, "E"),
@@ -38,7 +36,24 @@ class MazeGenerator:
         exit_: Tuple[int, int],
         is_ft_printable: bool = True,
     ) -> None:
+        """
+        Initialize the MazeGenerator.
 
+        Parameters
+        ----------
+        width : int
+            Width of the maze in cells.
+        height : int
+            Height of the maze in cells.
+        seed : Optional[int]
+            Random seed for reproducibility.
+        entry : Tuple[int,int]
+            Starting cell coordinates (row, col).
+        exit_ : Tuple[int,int]
+            Exit cell coordinates (row, col).
+        is_ft_printable : bool
+            Whether to allow printing the maze in real-time.
+        """
         self.width: int = width
         self.height: int = height
         self.seed: Optional[int] = seed
@@ -58,7 +73,13 @@ class MazeGenerator:
         ]
 
     def where_is_42(self) -> None:
+        """
+        Mark a special pattern ("42") in the middle of the maze.
 
+        This sets certain cells as visited and changes their values
+        to a special marker (16) to prevent the generator from
+        modifying them.
+        """
         ft_y = int((self.height / 2) - 2.5)
         ft_x = int((self.width / 2) - 3.5)
 
@@ -121,7 +142,14 @@ class MazeGenerator:
             self.ft_coords.append((ft_y, ft_x))
 
     def maze_render(self, theme_id: Optional[str] = None) -> None:
+        """
+        Render the maze to the terminal using ANSI colors.
 
+        Parameters
+        ----------
+        theme_id : Optional[str]
+            ID of the theme to apply. Falls back to 'ash_lava' if invalid.
+        """
         if theme_id is None:
             theme_id = '1'   # or your default theme id
 
@@ -200,7 +228,25 @@ class MazeGenerator:
         is_perfect: bool,
         theme_id: Optional[str] = None
     ) -> List[List[int]]:
+        """
+        Generate a perfect maze using DFS backtracking.
 
+        Perfect maze: exactly one path exists between any two cells.
+
+        Parameters
+        ----------
+        generator_time : float
+            Time delay in seconds for visualization.
+        is_perfect : bool
+            Whether to render the final maze.
+        theme_id : Optional[str]
+            Theme ID for rendering.
+
+        Returns
+        -------
+        List[List[int]]
+            Generated maze with walls removed.
+        """
         if self.seed is not None:
             random.seed(self.seed)
 
@@ -247,7 +293,23 @@ class MazeGenerator:
         generator_time: float,
         theme_id: Optional[str] = None
     ) -> List[List[int]]:
+        """
+        Generate a non-perfect maze by selectively removing walls.
 
+        Non-perfect maze: may contain loops, multiple paths between cells.
+
+        Parameters
+        ----------
+        generator_time : float
+            Time delay in seconds for visualization.
+        theme_id : Optional[str]
+            Theme ID for rendering.
+
+        Returns
+        -------
+        List[List[int]]
+            Generated maze allowing loops.
+        """
         if self.seed is not None:
             random.seed(self.seed + 1)
 
@@ -337,6 +399,7 @@ class MazeGenerator:
                     clear(self.is_ft_printable)
                     self.maze_render(theme_id)
                     time.sleep(generator_time)
+
             else:
                 stack.pop()
 
@@ -345,55 +408,3 @@ class MazeGenerator:
             self.maze_render(theme_id)
 
         return self.maze
-
-
-def generator_entery(
-    width: int,
-    height: int,
-    seed: Optional[int],
-    entry: Tuple[int, int],
-    exit_: Tuple[int, int],
-    is_perfect: bool,
-    generator_time: float,
-    is_ft_printable: bool,
-    theme_id: Optional[str] = None
-) -> MazeData:
-
-    maze_gen = MazeGenerator(
-        width,
-        height,
-        seed,
-        entry,
-        exit_,
-        is_ft_printable,
-    )
-
-    if is_ft_printable:
-        maze_gen.where_is_42()
-
-    for cord in maze_gen.ft_coords:
-
-        if cord == entry:
-
-            ascii_landing()
-            print(
-                "The entery is placed inside of the 42 pattern, "
-                "please enter another cords"
-            )
-            exit(0)
-
-        elif cord == exit_:
-
-            ascii_landing()
-            print(
-                "The exit is placed inside of the 42 pattern, "
-                "please enter another cords"
-            )
-            exit(0)
-
-    maze = maze_gen.generate_perfect_maze(generator_time, is_perfect, theme_id)
-
-    if not is_perfect:
-        maze = maze_gen.generate_non_perfect_maze(generator_time, theme_id)
-
-    return {"maze": maze, "ft_coords": maze_gen.ft_coords}

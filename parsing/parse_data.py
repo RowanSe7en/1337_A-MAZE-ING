@@ -3,7 +3,19 @@ from typing import List, Dict, Any
 
 
 def open_file(filename: str) -> List[str]:
+    """
+    Read a configuration file and return its content as a list of lines.
 
+    Args:
+        filename: Path to the configuration file.
+
+    Returns:
+        A list of strings representing
+        each line of the file without newline characters.
+
+    Raises:
+        ValueError: If the file does not exist or cannot be accessed.
+    """
     try:
         with open(filename, "r") as f:
             data_list = f.read().splitlines()
@@ -14,7 +26,22 @@ def open_file(filename: str) -> List[str]:
 
 
 def parse_data(file_data: List[str]) -> Dict[str, str]:
+    """
+    Parse raw configuration lines into a dictionary of key-value pairs.
 
+    Ignores empty lines and comments starting with '#'. Each valid line must
+    follow the format KEY=VALUE.
+
+    Args:
+        file_data: List of raw lines read from the configuration file.
+
+    Returns:
+        A dictionary mapping configuration
+        keys (lowercased) to their string values.
+
+    Raises:
+        ValueError: If a line does not follow the KEY=VALUE format.
+    """
     data_dict: Dict[str, str] = {}
 
     for line_num, item in enumerate(file_data, 1):
@@ -37,7 +64,25 @@ def parse_data(file_data: List[str]) -> Dict[str, str]:
 
 def check_prop(dict_data: Dict[str, str],
                is_animated: bool = False) -> Dict[str, Any]:
+    """
+    Validate and convert configuration values to their appropriate types.
 
+    This function parses numeric values, booleans, coordinates, and optional
+    parameters used for maze generation, solving, and animation.
+
+    Args:
+        dict_data: Dictionary containing raw configuration values as strings.
+        is_animated: Flag indicating whether
+        animation mode is forced externally.
+
+    Returns:
+        A dictionary containing validated
+        and properly typed configuration values.
+
+    Raises:
+        ValueError: If a configuration value
+        is invalid or incorrectly formatted.
+    """
     data_parsed: Dict[str, Any] = {}
 
     for key, val in dict_data.items():
@@ -146,7 +191,25 @@ def check_prop(dict_data: Dict[str, str],
 
 
 def check_all_available(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Ensure that all mandatory configuration values are present and valid.
 
+    This function validates the presence of required keys, verifies that entry
+    and exit positions are different and inside the maze bounds, and determines
+    whether the maze is large enough to display the "42" pattern.
+
+    Args:
+        data: Dictionary containing validated configuration values.
+
+    Returns:
+        A dictionary containing:
+            - "data": The validated configuration dictionary.
+            - "is_ft_printable": Boolean indicating if the maze is large enough
+              to display the "42" pattern.
+
+    Raises:
+        ValueError: If mandatory keys are missing or coordinates are invalid.
+    """
     required = ["width", "height", "entry", "exit", "output_file", "perfect"]
     missing = [k for k in required if k not in data]
     is_ft_printable = True

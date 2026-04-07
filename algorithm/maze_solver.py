@@ -1,13 +1,34 @@
-from algorithm.maze_generator import MazeGenerator
 import random
+from mazegen.maze_generator import *  # noqa: F403, F401
+
 from typing import List, Tuple, Dict
 
 
 class MazeSolver:
+    """
+    Maze solving engine using BFS and DFS algorithms.
 
+    This class is responsible for exploring a generated maze and finding a
+    path from the entry cell to the exit cell. It stores visited cells to
+    avoid revisiting them and builds a parent dictionary that allows the
+    reconstruction of the final solution path.
+    """
     def __init__(self, width: int, height: int, entry: Tuple[int, int],
                  exit_: Tuple[int, int]) -> None:
+        """
+        Initialize the MazeSolver.
 
+        Parameters
+        ----------
+        width : int
+            Width of the maze.
+        height : int
+            Height of the maze.
+        entry : Tuple[int, int]
+            Starting cell coordinates (row, column).
+        exit_ : Tuple[int, int]
+            Exit cell coordinates (row, column).
+        """
         self.width: int = width
         self.height: int = height
         self.entry: Tuple[int, int] = entry
@@ -19,7 +40,23 @@ class MazeSolver:
 
     def bfs_solve_maze(self, maze: List[List[int]]
                        ) -> Dict[Tuple[int, int], Tuple[int, int, str]]:
+        """
+        Solve the maze using Breadth-First Search (BFS).
 
+        BFS explores the maze level by level and guarantees finding the
+        shortest path in an unweighted maze.
+
+        Parameters
+        ----------
+        maze : List[List[int]]
+            Maze grid encoded using wall bitmasks.
+
+        Returns
+        -------
+        Dict[Tuple[int, int], Tuple[int, int, str]]
+            A dictionary mapping each visited cell to its parent cell and the
+            direction taken to reach it.
+        """
         en_y, en_x = self.entry
         ex_y, ex_x = self.exit_
 
@@ -60,7 +97,23 @@ class MazeSolver:
 
     def dfs_solve_maze(self, maze: List[List[int]]
                        ) -> Dict[Tuple[int, int], Tuple[int, int, str]]:
+        """
+        Solve the maze using Depth-First Search (DFS).
 
+        DFS explores one branch deeply before backtracking. The solution
+        found is not guaranteed to be the shortest path but is usually
+        faster in exploration.
+
+        Parameters
+        ----------
+        maze : List[List[int]]
+            Maze grid.
+
+        Returns
+        -------
+        Dict[Tuple[int, int], Tuple[int, int, str]]
+            Parent dictionary used to reconstruct the solution path.
+        """
         en_y, en_x = self.entry
         ex_y, ex_x = self.exit_
 
@@ -113,7 +166,29 @@ class MazeSolver:
     def extract_the_path(self, output_file: str, maze: List[List[int]],
                          parents: Dict[Tuple[int, int], Tuple[int, int, str]]
                          ) -> Dict[Tuple[int, int], Tuple[int, int, str]]:
+        """
+        Reconstruct the solution path and export the solved maze to a file.
 
+        The function:
+        1. Rebuilds the path from the parents dictionary.
+        2. Writes the maze in hexadecimal format.
+        3. Writes entry and exit coordinates.
+        4. Writes the solution path directions.
+
+        Parameters
+        ----------
+        output_file : str
+            Path to the output file.
+        maze : List[List[int]]
+            Maze grid.
+        parents : Dict[Tuple[int,int], Tuple[int,int,str]]
+            Parent mapping returned by the solver.
+
+        Returns
+        -------
+        Dict[Tuple[int,int], Tuple[int,int,str]]
+            Ordered dictionary representing the solution path.
+        """
         path_list: List[str] = []
         path_cords: Dict[Tuple[int, int], Tuple[int, int, str]] = {}
         current: Tuple[int, int] = self.exit_
@@ -153,7 +228,30 @@ def solver_entery(width: int, height: int, entry: Tuple[int, int],
                   exit_: Tuple[int, int], out_file: str,
                   solve: str, maze: List[List[int]]
                   ) -> Dict[Tuple[int, int], Tuple[int, int, str]]:
+    """
+    Entry point for maze solving.
 
+    Creates a MazeSolver instance, runs the selected algorithm,
+    exports the solved maze, and returns the solution path.
+
+    Parameters
+    ----------
+    width, height : int
+        Maze dimensions.
+    entry, exit_ : Tuple[int, int]
+        Start and exit cells.
+    out_file : str
+        Output file path.
+    solve : str
+        Solving algorithm ("BFS" or "DFS").
+    maze : List[List[int]]
+        Maze grid.
+
+    Returns
+    -------
+    Dict[Tuple[int,int], Tuple[int,int,str]]
+        Solution path coordinates.
+    """
     maze_solver = MazeSolver(width, height, entry, exit_)
 
     if solve.upper() == "DFS":
