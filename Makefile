@@ -9,7 +9,7 @@ run:
 	$(PYTHON) $(MAIN) $(CONFIG)
 
 install:
-	pip install dist/mazegen-1.0.0-py3-none-any.whl
+	pip install mazegen-1.0.0-py3-none-any.whl
 
 debug:
 	$(PYTHON) -m pdb $(MAIN) $(CONFIG)

@@ -364,9 +364,9 @@ class MazeGenerator:
 
                     empty = 0
 
-                    for i in range(1, 4):
+                    for i in range(1, 3):
 
-                        if wall in (1, 4):
+                        if wall in (1, 3):
 
                             if (x + i < self.width and
                                     not (self.maze[y][x + i] & wall)):
