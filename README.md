@@ -1,3 +1,4 @@
+<div align="center">
 
 ```
  █████╗       ███╗   ███╗ █████╗ ███████╗███████╗      ██╗███╗   ██╗  ██████╗ 
@@ -8,11 +9,8 @@
 ╚═╝  ╚═╝      ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝      ╚═╝╚═╝  ╚═══╝  ╚═════╝
 ```
 
-<div align="center">
-
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![42 School](https://img.shields.io/badge/42-brouane-000000?style=for-the-badge&logo=42&logoColor=white)](https://42.fr/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
 [![flake8 & mypy](https://img.shields.io/badge/flake8%20%26%20mypy-passing-brightgreen?style=for-the-badge)](https://flake8.pycqa.org/)
 [![Status](https://img.shields.io/badge/Status-Finished-success?style=for-the-badge)](.)
 [![Score](https://img.shields.io/badge/Score-125%2F100-gold?style=for-the-badge&logo=starship&logoColor=white)](.)
@@ -20,6 +18,19 @@
 </div>
 
 ---
+
+## ✅ Project grade screenshot
+
+![Project screenshot](screenshots_preview/Screenshot.png)
+
+---
+
+## 🧩 Project Preview screenshot
+
+![Project screenshot](screenshots_preview/Screenshot_From_2026_04_09_22_37_52.png)
+
+---
+
 ## 📖 About
 > **A-MAZE-ING** — a labyrinth solver built with blood, sweat, and 42 tears.  
 > Feed it a maze. Watch it escape. Cry at the beauty.
