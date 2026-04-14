@@ -9,7 +9,13 @@ run:
 	$(PYTHON) $(MAIN) $(CONFIG)
 
 install:
+	pip install -r requirements.txt
+
+pack:
 	pip install mazegen-1.0.0-py3-none-any.whl
+
+build:
+	python3 -m build
 
 debug:
 	$(PYTHON) -m pdb $(MAIN) $(CONFIG)
