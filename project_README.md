@@ -22,21 +22,64 @@ Key capabilities:
 
 ## Instructions
 
+To run the code you can run:
+
 ```bash
 python3 a_maze_ing.py config.txt
 ```
 
+also you can run:
+
+```bash
+make
+```
+
+also you can run:
+
+```bash
+make run
+```
+
 The program reads `config.txt`, generates the maze, writes the output file specified in the config, and optionally displays the maze in the terminal.
+
+to install dependencies you should run:
+
+```bash
+make install
+```
+
+to install the package you should run:
+
+```bash
+make pack
+```
 
 **Project structure:**
 
 ```
-a-maze-ing/
-├── a_maze_ing.py       # Entry point — run this file
-├── maze_generator.py   # Reusable MazeGenerator module
-├── config.txt          # Example configuration file
-├── setup.py            # pip-installable package setup
-└── README.md           # Documentation
+Directory structure:
+    ├── Makefile
+    ├── README.md
+    ├── a_maze_ing.py
+    ├── algorithm/
+    │   ├── __init__.py
+    │   ├── ascii_landing.py
+    │   ├── clear.py
+    │   ├── maze_renderer.py
+    │   ├── maze_solver.py
+    │   └── theme_palette.py
+    ├── config.txt
+    ├── generator_entery.py
+    ├── mazegen/
+    │   ├── __init__.py
+    │   └── maze_generator.py
+    ├── mazegen-1.0.0-py3-none-any.whl
+    ├── mazegen-1.0.0.tar.gz
+    ├── menu.py
+    ├── parsing/
+    │   ├── __init__.py
+    │   └── parse_data.py
+    └── requirements.txt
 ```
 
 ---

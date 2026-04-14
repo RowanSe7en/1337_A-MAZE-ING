@@ -82,8 +82,7 @@ Whether you want a crisp ASCII maze or a glowing neon emoji labyrinth — A-MAZE
 ## Project Structure
 
 ```text
-
-└── a-maze-ing/
+A-MAZE-ING/
     ├── Makefile
     ├── README.md
     ├── a_maze_ing.py
@@ -105,8 +104,10 @@ Whether you want a crisp ASCII maze or a glowing neon emoji labyrinth — A-MAZE
     ├── parsing/
     │   ├── __init__.py
     │   └── parse_data.py
+    ├── project_README.md
     ├── pyproject.toml
-    └── requirements.txt
+    ├── requirements.txt
+    └── screenshots_preview/
 ```
 
 -----
@@ -123,7 +124,7 @@ cd 1337_A-MAZE-ING
 You can install the package if you want (optional):
 
 ```bash
-make install
+make pack
 ```
 
 > **Requirements:** Python 3.8+ — no external dependencies.
@@ -1710,7 +1711,68 @@ this problem introduced **semantic rendering**:
 Some things — like “42” —  
 deserve to stay whole.
 
-> *Every maze is unique. Every path is yours to find. Happy exploring\!* 🌀
+---
+
+# How the `mazegen` package was built
+
+### 1. Create a virtual environment
+
+Development and testing were done inside a `venv` to keep the system Python clean and to mimic real pip installation.
+
+```bash
+python -m venv venv
+source venv/bin/activate   # Linux / macOS
+# venv\Scripts\activate    # Windows
+```
+
+---
+
+### 2. Configure packaging with `pyproject.toml`
+
+The package uses the modern Python build system with **setuptools**.
+
+Key points:
+
+* Defines project metadata (name, version, Python requirement).
+* Uses `setuptools.build_meta` as the build backend.
+* Automatically discovers the `mazegen` package.
+
+---
+
+### 3. Build distribution files
+
+```bash
+pip install build
+python -m build
+```
+
+This generates the installable artifacts inside `dist/`:
 
 ```
+dist/
+mazegen-0.1.0-py3-none-any.whl
+mazegen-0.1.0.tar.gz
 ```
+
+* `.whl` → ready-to-install binary distribution
+* `.tar.gz` → source distribution
+
+---
+
+### 4. Install locally for testing
+
+```bash
+pip install dist/mazegen-0.1.0-py3-none-any.whl
+```
+
+Verify installation:
+
+```bash
+pip list
+```
+
+The package is now installed in the virtual environment like a normal pip package.
+
+---
+
+> *Every maze is unique. Every path is yours to find. Happy exploring\!* 🌀
